@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { FaCoffee, FaHeart, FaBasketballBall } from "react-icons/fa";
-import { Button } from ".";
+import { Button, IconButton } from ".";
 
 const meta: Meta<typeof Button> = {
   title: "Components/Button",
@@ -8,30 +8,43 @@ const meta: Meta<typeof Button> = {
   argTypes: {
     label: { control: "text" },
     size: { control: "select", options: ["default", "small", "large"] },
-    onClick: { action: "clicked" },
-    iconLeft: { 
-      options: ['None', 'Heart', 'Coffee', 'Ball'],
-      mapping: {
-        None: undefined,
-        Heart: FaHeart,
-        Coffee: FaCoffee,
-        Ball: FaBasketballBall,
-      },
-      control: { 
-        type: 'select' 
-      }
+    variant: {
+      control: "select",
+      options: [
+        "default",
+        "secondary",
+        "critical",
+        "transparent",
+        "info",
+        "success",
+        "warning",
+        "danger",
+      ],
     },
-    iconRight: { 
-      options: ['None', 'Heart', 'Coffee', 'Ball'],
+    onClick: { action: "clicked" },
+    iconLeft: {
+      options: ["None", "Heart", "Coffee", "Ball"],
       mapping: {
         None: undefined,
         Heart: FaHeart,
         Coffee: FaCoffee,
         Ball: FaBasketballBall,
       },
-      control: { 
-        type: 'select' 
-      }
+      control: {
+        type: "select",
+      },
+    },
+    iconRight: {
+      options: ["None", "Heart", "Coffee", "Ball"],
+      mapping: {
+        None: undefined,
+        Heart: FaHeart,
+        Coffee: FaCoffee,
+        Ball: FaBasketballBall,
+      },
+      control: {
+        type: "select",
+      },
     },
   },
 };
@@ -39,8 +52,9 @@ const meta: Meta<typeof Button> = {
 export default meta;
 
 type Story = StoryObj<typeof Button>;
+type IconStory = StoryObj<typeof IconButton>;
 
-export const Primary: Story = {
+export const Default: Story = {
   args: {
     label: "Hello world",
     size: "default",
@@ -49,22 +63,30 @@ export const Primary: Story = {
 
 export const Small: Story = {
   args: {
-    ...Primary.args,
+    ...Default.args,
     size: "small",
   },
 };
 
 export const Large: Story = {
   args: {
-    ...Primary.args,
+    ...Default.args,
     size: "large",
   },
 };
 
 export const WithIcons: Story = {
   args: {
-    ...Primary.args,
+    ...Default.args,
     iconLeft: FaCoffee,
     iconRight: FaHeart,
+  },
+};
+
+export const Icon: IconStory = {
+  args: {
+    icon: FaCoffee,
+    variant: 'default',
+    size: 'default',
   },
 };
