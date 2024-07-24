@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { BasicButton } from '.';
+import { Button } from '.';
 
-const meta: Meta<typeof BasicButton> = {
+const meta: Meta<typeof Button> = {
   title: 'Components/Button',
-  component: BasicButton,
+  component: Button,
   argTypes: {
     label: { control: 'text' },
     onClick: { action: 'clicked' },
@@ -11,10 +11,10 @@ const meta: Meta<typeof BasicButton> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof BasicButton>;
+type Story = StoryObj<typeof Button>;
 
 export const Primary: Story = {
   args: {
-    label: 'BasicButton',
+    label: 'Button',
   },
 };

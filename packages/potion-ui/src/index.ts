@@ -1,3 +1,4 @@
 import './index.css';
 
-export { BasicButton } from './components/Button';
+export { Button } from './components/Button';
+export { Typography } from './components/Typography';
