@@ -419,6 +419,72 @@ const palette = [
       },
     ],
   },
+  {
+    name: "Product",
+    textColors: ["text-white", "text-black"],
+    colors: [
+      {
+        colorClass: "bg-product-50",
+        shade: "50",
+        hex: "#ECF8F7",
+        hasBorder: false,
+      },
+      {
+        colorClass: "bg-product-100",
+        shade: "100",
+        hex: "#D6F0EC",
+        hasBorder: false,
+      },
+      {
+        colorClass: "bg-product-200",
+        shade: "200",
+        hex: "#BFE8E2",
+        hasBorder: false,
+      },
+      {
+        colorClass: "bg-product-300",
+        shade: "300",
+        hex: "#00A58E",
+        hasBorder: false,
+      },
+      {
+        colorClass: "bg-product-400",
+        shade: "400",
+        hex: "#009580",
+        hasBorder: false,
+      },
+      {
+        colorClass: "bg-product-500",
+        shade: "500",
+        hex: "#008472",
+        hasBorder: false,
+      },
+      {
+        colorClass: "bg-product-600",
+        shade: "600",
+        hex: "#007F6D",
+        hasBorder: false,
+      },
+      {
+        colorClass: "bg-product-700",
+        shade: "700",
+        hex: "#007060",
+        hasBorder: false,
+      },
+      {
+        colorClass: "bg-product-800",
+        shade: "800",
+        hex: "#006657",
+        hasBorder: false,
+      },
+      {
+        colorClass: "bg-product-900",
+        shade: "900",
+        hex: "#005C4E",
+        hasBorder: false,
+      },
+    ],
+  },
 ];
 
 type ColorProps = {
