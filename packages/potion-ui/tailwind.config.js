@@ -110,6 +110,10 @@ export default {
           900: "#005C4E",
         },
       },
+      boxShadow: {
+        input:
+          "-2px -2px 0px 0px #E8F4FD, -2px 2px 0px 0px #E8F4FD, 2px -2px 0px 0px #E8F4FD, 2px 2px 0px 0px #E8F4FD",
+      },
     },
   },
   plugins: [],
