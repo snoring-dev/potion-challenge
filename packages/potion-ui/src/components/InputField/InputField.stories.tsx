@@ -8,9 +8,10 @@ const meta: Meta<typeof InputField> = {
   argTypes: {
     variant: {
       control: "select",
-      options: ["default"],
+      options: ["default", "error"],
       description: "The variant of the input component",
     },
+    size: { control: "select", options: ["normal", "small", "large"] },
   },
   parameters: {
     componentSubtitle:
@@ -24,13 +25,8 @@ type Story = StoryObj<typeof InputField>;
 export const Default: Story = {
   args: {
     variant: "default",
+    label: "Potion name",
+    description: "Give your potion an awesome name",
+    placeholder: "potion name here..."
   },
-};
-
-export const AllVariants: Story = {
-  render: () => (
-    <div className="space-y-4">
-      <InputField />
-    </div>
-  ),
 };

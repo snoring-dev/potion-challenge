@@ -5,15 +5,23 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../lib";
 
 const inputVariants = cva(
-  "flex flex-row space-x-2 items-center justify-center rounded-[3px] transition-all duration-300",
+  "flex flex-row space-x-2 items-center justify-center bg-white text-ink-50 focus-within:text-ink-300 border rounded-[3px] transition-all duration-300",
   {
     variants: {
       variant: {
         default:
-          "bg-white text-ink-50 border border-cloud-700 focus:text-ink-300 focus:border-blue-300 focus-within:border-blue-300 focus-within:shadow-input",
+          "border-cloud-700 focus-within:border-blue-300 focus-within:shadow-input",
+        error:
+          "border-red-500 focus-within:border-red-600 focus-within:shadow-input-error",
       },
       size: {
+        small: "px-2 py-2 text-sm mt-1 w-full",
         normal: "px-3 py-3 text-base mt-1 w-full",
+        large: "px-4 py-4 text-lg mt-1 w-full",
+      },
+      isDisabled: {
+        true: "bg-cloud-300 border-cloud-700 text-ink-50 cursor-not-allowed",
+        false: "",
       },
     },
     defaultVariants: {
@@ -25,41 +33,68 @@ const inputVariants = cva(
 
 export interface InputFieldProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size">,
-    VariantProps<typeof inputVariants> {}
+    VariantProps<typeof inputVariants> {
+  label?: string;
+  description?: string;
+  errorMessage?: string;
+  iconLeft?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  iconRight?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+}
 
 export const InputField: React.FC<InputFieldProps> = ({
   className,
   variant,
   size,
+  label,
+  description,
+  errorMessage,
+  iconLeft: IconLeft,
+  iconRight: IconRight,
   ...props
 }) => {
   return (
     <Field>
-      <Label className="data-[disabled]:opacity-50">
-        <Typography className="font-semibold text-base text-ink-700">
-          Field label
-        </Typography>
-      </Label>
-      <Description className="data-[disabled]:opacity-50">
-        <Typography variant="small" className="text-ink-100">
-          Use your real name so people will recognize you.
-        </Typography>
-      </Description>
-      <div className={cn(inputVariants({ variant, size, className }))}>
-        <div className="w-5 h-5 bg-slate-700" />
+      {label && (
+        <Label>
+          <Typography className="font-semibold text-base text-ink-700">
+            {label}
+          </Typography>
+        </Label>
+      )}
+      {description && (
+        <Description>
+          <Typography variant="small" className="text-ink-100">
+            {description}
+          </Typography>
+        </Description>
+      )}
+      <div
+        className={cn(
+          inputVariants({
+            variant,
+            size,
+            className,
+            isDisabled: props.disabled,
+          })
+        )}
+      >
+        {IconLeft && <IconLeft className="w-5 h-5" />}
         <Input
           {...props}
-          name="full_name"
-          placeholder="Mohammed"
-          className="w-full focus:outline-none"
+          aria-describedby={
+            description ? description : errorMessage ? errorMessage : undefined
+          }
+          className="w-full focus:outline-none disabled:bg-transparent disabled:cursor-not-allowed"
         />
-        <div className="w-5 h-5 bg-slate-700" />
+        {IconRight && <IconRight className="w-5 h-5" />}
       </div>
-      <Description className="data-[disabled]:opacity-50">
-        <Typography variant="small" className="text-red-300">
-          you entered a non valid name!
-        </Typography>
-      </Description>
+      {errorMessage && (
+        <Description>
+          <Typography variant="small" className="text-red-300">
+            {errorMessage}
+          </Typography>
+        </Description>
+      )}
     </Field>
   );
 };

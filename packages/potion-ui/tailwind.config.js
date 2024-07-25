@@ -113,6 +113,8 @@ export default {
       boxShadow: {
         input:
           "-2px -2px 0px 0px #E8F4FD, -2px 2px 0px 0px #E8F4FD, 2px -2px 0px 0px #E8F4FD, 2px 2px 0px 0px #E8F4FD",
+        "input-error":
+          "-2px -2px 0px 0px #FAEAEA, -2px 2px 0px 0px #FAEAEA, 2px -2px 0px 0px #FAEAEA, 2px 2px 0px 0px #FAEAEA",
       },
     },
   },
