@@ -31,6 +31,19 @@ const inputVariants = cva(
   }
 );
 
+const iconVariants = cva("", {
+  variants: {
+    size: {
+      small: "w-3 h-3",
+      normal: "w-4 h-4",
+      large: "w-5 h-5",
+    },
+  },
+  defaultVariants: {
+    size: "normal",
+  },
+});
+
 export interface InputFieldProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size">,
     VariantProps<typeof inputVariants> {
@@ -78,7 +91,7 @@ export const InputField: React.FC<InputFieldProps> = ({
           })
         )}
       >
-        {IconLeft && <IconLeft className="w-5 h-5" />}
+        {IconLeft && <IconLeft className={cn(iconVariants({ size }))} />}
         <Input
           {...props}
           aria-describedby={
@@ -86,7 +99,7 @@ export const InputField: React.FC<InputFieldProps> = ({
           }
           className="w-full focus:outline-none disabled:bg-transparent disabled:cursor-not-allowed"
         />
-        {IconRight && <IconRight className="w-5 h-5" />}
+        {IconRight && <IconRight className={cn(iconVariants({ size }))} />}
       </div>
       {errorMessage && (
         <Description>
