@@ -1,6 +1,6 @@
 import React from "react";
 import { Typography } from "../Typography";
-import { FaStar, FaStarHalfStroke } from "react-icons/fa6";
+import { Rating } from "../Rating";
 import { BsFire } from "react-icons/bs";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../lib";
@@ -42,20 +42,6 @@ const ImageWrapper: React.FC<{
     />
   </div>
 );
-
-const Rating: React.FC<{ rating: number }> = ({ rating }) => {
-  const fullStars = Math.floor(rating);
-  const hasHalfStar = rating % 1 !== 0;
-
-  return (
-    <div className="flex flex-row gap-0.5 text-green-400">
-      {[...Array(fullStars)].map((_, i) => (
-        <FaStar key={i} />
-      ))}
-      {hasHalfStar && <FaStarHalfStroke />}
-    </div>
-  );
-};
 
 export interface MiniCardProps extends VariantProps<typeof miniCardVariants> {
   title: string;
