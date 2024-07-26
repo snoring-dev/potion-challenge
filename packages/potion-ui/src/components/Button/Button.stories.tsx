@@ -3,7 +3,7 @@ import { FaCoffee, FaHeart, FaBasketballBall } from "react-icons/fa";
 import { Button, IconButton } from ".";
 
 const meta: Meta<typeof Button> = {
-  title: "Components/Button",
+  title: "Atoms/Button",
   component: Button,
   argTypes: {
     label: { control: "text" },
