@@ -1,4 +1,3 @@
-import React from 'react';
 import { Meta, StoryObj } from "@storybook/react";
 import { ListItem } from "./";
 import { FaCoffee, FaLemon } from 'react-icons/fa';
@@ -71,12 +70,3 @@ export const WithIconAndCustomColor: Story = {
   },
 };
 
-const Template: Story = {
-  render: (args) => (
-    <ul className="space-y-4">
-      <ListItem {...args} />
-      <ListItem {...args} index={args.index + 1} />
-      <ListItem {...args} index={args.index + 2} />
-    </ul>
-  ),
-};
