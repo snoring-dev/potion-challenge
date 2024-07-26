@@ -9,7 +9,7 @@ const meta: Meta<typeof Card> = {
     pictureUrl: { control: 'text' },
     title: { control: 'text' },
     description: { control: 'text' },
-    tags: { control: 'array' },
+    tags: { control: 'object' },
     primaryAction: { control: 'object' },
     secondaryAction: { control: 'object' },
   },
