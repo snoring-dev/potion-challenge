@@ -1,0 +1,61 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Potion {
+  id               String             @id @default(auto()) @map("_id") @db.ObjectId
+  title            String
+  creationDate     DateTime
+  rating           Float
+  description      String
+  details          String
+  thumbnailUrl     String
+  mainImageUrl     String
+  metrics          Metrics
+  magicalBrewStats MagicalBrewStats
+  instructions     String[]
+  tags             String[]
+  ingredients      PotionIngredient[]
+}
+
+model Ingredient {
+  id               String             @id @default(auto()) @map("_id") @db.ObjectId
+  name             String             @unique
+  shortDescription String
+  inventory        Int
+  potions          PotionIngredient[]
+}
+
+model PotionIngredient {
+  id           String     @id @default(auto()) @map("_id") @db.ObjectId
+  potion       Potion     @relation(fields: [potionId], references: [id])
+  potionId     String     @db.ObjectId
+  ingredient   Ingredient @relation(fields: [ingredientId], references: [id])
+  ingredientId String     @db.ObjectId
+  quantity     Float
+
+  @@unique([potionId, ingredientId])
+}
+
+type Metrics {
+  potency     String
+  duration    String
+  difficulty  String
+  sideEffects String
+}
+
+type MagicalBrewStats {
+  arcanePotency    String
+  etherealEssence  String
+  corporealMass    String
+  vitalForce       String
+  mysticalResidue  String
+  pureMagic        String
+  elementalBalance String
+  spiritResonance  String
+}
