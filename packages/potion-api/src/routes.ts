@@ -2,9 +2,19 @@ import { Hono } from "hono";
 import { cors } from "hono/cors";
 import prisma from "./lib/prisma";
 
-const app = new Hono().basePath('/api');
+const app = new Hono().basePath("/api");
 
-app.use("/api/*", cors());
+app.use(
+  "/*",
+  cors({
+    origin: "http://localhost:5173", // Your React app's URL
+    allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowHeaders: ["Content-Type", "Authorization"],
+    exposeHeaders: ["Content-Length"],
+    maxAge: 600,
+    credentials: true,
+  })
+);
 
 app.get("/potions", async (c) => {
   const potions = await prisma.potion.findMany({
