@@ -26,9 +26,9 @@ export const Default: Story = {
     imageAlt: "Elixir Arcanum in a crystal vial",
     metricsProps: {
       metrics: [
-        { name: "Potentia", value: "Suprema" },
-        { name: "Duratio", value: "II Horae" },
-        { name: "Effectus Collaterales", value: "Minima" },
+        { name: "Potenty", value: "Suprema" },
+        { name: "Duration", value: "II Horae" },
+        { name: "Side Effects", value: "Minima" },
       ],
     },
     description:
