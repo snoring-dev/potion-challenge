@@ -13,12 +13,12 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as IndexImport } from './routes/index'
 import { Route as PotionPotionIdImport } from './routes/potion.$potionId'
 
 // Create Virtual Routes
 
 const IngredientsLazyImport = createFileRoute('/ingredients')()
-const IndexLazyImport = createFileRoute('/')()
 
 // Create/Update Routes
 
@@ -27,10 +27,10 @@ const IngredientsLazyRoute = IngredientsLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/ingredients.lazy').then((d) => d.Route))
 
-const IndexLazyRoute = IndexLazyImport.update({
+const IndexRoute = IndexImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+} as any)
 
 const PotionPotionIdRoute = PotionPotionIdImport.update({
   path: '/potion/$potionId',
@@ -45,7 +45,7 @@ declare module '@tanstack/react-router' {
       id: '/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexLazyImport
+      preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
     '/ingredients': {
@@ -68,7 +68,7 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 export const routeTree = rootRoute.addChildren({
-  IndexLazyRoute,
+  IndexRoute,
   IngredientsLazyRoute,
   PotionPotionIdRoute,
 })
@@ -87,7 +87,7 @@ export const routeTree = rootRoute.addChildren({
       ]
     },
     "/": {
-      "filePath": "index.lazy.tsx"
+      "filePath": "index.tsx"
     },
     "/ingredients": {
       "filePath": "ingredients.lazy.tsx"
