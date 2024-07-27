@@ -65,7 +65,7 @@ export const MiniCard: React.FC<MiniCardProps> = ({
   className,
 }) => (
   <div className={cn(miniCardVariants({ variant, size }), className)}>
-    <ImageWrapper src={imageUrl} alt={imageAlt} size={size} />
+    <ImageWrapper src={imageUrl} alt={imageAlt} size={size ?? 'default'} />
     <div className="w-full h-full pl-2">
       <Typography variant={size === "small" ? "h5" : "h4"}>{title}</Typography>
       <Rating rating={rating} />
