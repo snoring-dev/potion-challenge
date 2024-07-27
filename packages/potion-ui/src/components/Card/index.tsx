@@ -4,7 +4,7 @@ import { cn } from "../../lib";
 import { Typography } from "../Typography";
 
 const cardVariants = cva(
-  "group flex flex-col rounded-xl border transition-all duration-300 cursor-pointer",
+  "group overflow-hidden h-full flex flex-col rounded-xl border transition-all duration-300 cursor-pointer",
   {
     variants: {
       variant: {
@@ -40,7 +40,7 @@ const CardHeader = ({
 );
 
 const CardBody = ({ title, description, tags = [] }: Partial<CardProps>) => (
-  <div className="overflow-hidden w-full p-6">
+  <div className="overflow-hidden w-full flex-grow p-6">
     <Typography variant="h4">{title}</Typography>
     <Typography variant="small" className="my-4">
       {description}
@@ -70,7 +70,7 @@ const CardFooter = ({
   primaryAction,
   secondaryAction,
 }: Pick<CardProps, "primaryAction" | "secondaryAction">) => (
-  <footer className="flex gap-2 overflow-hidden w-full px-6 pb-6">
+  <footer className="flex gap-2 overflow-hidden w-full mt-auto px-6 pb-6">
     {primaryAction && (
       <Button
         label={primaryAction.label}
