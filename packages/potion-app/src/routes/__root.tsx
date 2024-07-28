@@ -1,27 +1,31 @@
-import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
+import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
+import { Navbar } from "../components/Navbar";
 
 export const Route = createRootRoute({
-  component: () => (
+  component: Layout,
+});
+
+function Layout() {
+  const navItems = [
+    { label: "Accueil", href: "/" },
+    { label: "Ingredients", href: "/ingredients" },
+    { label: "Potion au hasard", href: "/potion/123" },
+  ];
+
+  return (
     <>
-      <div className="p-2 flex gap-2">
-        <Link to="/" className="[&.active]:font-bold">
-          Home
-        </Link>{" "}
-        <Link to="/ingredients" className="[&.active]:font-bold">
-          Ingredients
-        </Link>
-        <Link
-          params={{ potionId: "123" }}
-          to="/potion/$potionId"
-          className="[&.active]:font-bold"
-        >
-          Potion Details
-        </Link>
+      <Navbar
+        logo="https://res.cloudinary.com/mjemmoudi/image/upload/v1722165960/potion_icon_terykh.png"
+        brandName="Flowbite"
+        navItems={navItems}
+        ctaButtonLabel="Get started"
+        onCtaClick={() => {}}
+      />
+      <div className="my-32">
+        <Outlet />
       </div>
-      <hr />
-      <Outlet />
       <TanStackRouterDevtools />
     </>
-  ),
-});
+  );
+}
