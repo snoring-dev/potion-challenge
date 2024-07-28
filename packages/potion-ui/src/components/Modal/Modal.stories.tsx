@@ -32,3 +32,24 @@ export const Default: Story = {
     );
   },
 };
+
+export const WithCustomTrigger: Story = {
+  render: () => {
+    return (
+      <Modal
+        title="Create a new potion"
+        renderTrigger={(openAction) => (
+          <Button label="Create Ingredient" onClick={openAction} variant="info" size="large" />
+        )}
+      >
+        <div className="w-[450px] space-y-4">
+          <InputField label="Name" size="small" />
+          <InputField label="Description" size="small" />
+          <div className="flex justify-end items-center pt-6">
+            <Button label="Submit" variant="info" />
+          </div>
+        </div>
+      </Modal>
+    );
+  },
+};

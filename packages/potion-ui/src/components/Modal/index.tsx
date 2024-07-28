@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useState } from "react";
+import React, { PropsWithChildren, ReactNode, useState } from "react";
 import {
   Dialog,
   DialogBackdrop,
@@ -10,13 +10,15 @@ import { IoCloseSharp } from "react-icons/io5";
 
 export interface ModalProps {
   title: string;
+  renderTrigger?: (openAction: () => void) => ReactNode;
 }
 
 export const Modal: React.FC<ModalProps & PropsWithChildren> = ({
   title,
+  renderTrigger,
   children,
 }) => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   function open() {
     setIsOpen(true);
@@ -28,9 +30,13 @@ export const Modal: React.FC<ModalProps & PropsWithChildren> = ({
 
   return (
     <>
-      <Button onClick={open} label="Open Modal">
-        Open dialog
-      </Button>
+      {renderTrigger ? (
+        renderTrigger(open)
+      ) : (
+        <Button onClick={open} label="Open Modal">
+          Open dialog
+        </Button>
+      )}
 
       <Dialog
         open={isOpen}
