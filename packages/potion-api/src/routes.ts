@@ -151,7 +151,7 @@ app.post("/ingredients/:id/inventory", async (c) => {
   const body = await c.req.json();
 
   const schema = z.object({
-    inventory: z.number().int().positive(),
+    inventory: z.number().int().nonnegative(),
   });
 
   const result = schema.safeParse(body);

@@ -11,11 +11,15 @@ const buttonVariants = cva(
         default:
           "text-white bg-product-300 hover:bg-product-400 active:bg-product-500",
         critical: "text-white bg-red-300 hover:bg-red-400 active:bg-red-500",
-        secondary: "text-ink-700 bg-cloud-300 hover:bg-cloud-400 active:bg-cloud-500",
-        transparent: "text-int-700 bg-white hover:bg-white-hover active:bg-white-active",
+        secondary:
+          "text-ink-700 bg-cloud-300 hover:bg-cloud-400 active:bg-cloud-500",
+        transparent:
+          "text-int-700 bg-white hover:bg-white-hover active:bg-white-active",
         info: "text-white bg-blue-300 hover:bg-blue-400 active:bg-blue-500",
-        warning: "text-white bg-orange-300 hover:bg-orange-400 active:bg-orange-500",
-        success: "text-white bg-green-300 hover:bg-green-400 active:bg-green-500",
+        warning:
+          "text-white bg-orange-300 hover:bg-orange-400 active:bg-orange-500",
+        success:
+          "text-white bg-green-300 hover:bg-green-400 active:bg-green-500",
         danger: "text-white bg-red-600 hover:bg-red-700 active:bg-red-800",
       },
       size: {
@@ -79,10 +83,15 @@ export const BaseButton: React.FC<ButtonProps> = ({
     <button
       {...props}
       onClick={onClick}
-      className={cn(buttonVariants({ variant, size, className }))}
+      className={cn(
+        "disabled:cursor-not-allowed disabled:opacity-50",
+        buttonVariants({ variant, size, className })
+      )}
     >
       {IconLeft && <IconLeft className={cn(iconVariants({ size }))} />}
-      {label && <Typography className={cn(labelVariants({ size }))}>{label}</Typography>}
+      {label && (
+        <Typography className={cn(labelVariants({ size }))}>{label}</Typography>
+      )}
       {IconRight && <IconRight className={cn(iconVariants({ size }))} />}
     </button>
   );
