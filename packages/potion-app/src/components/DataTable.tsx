@@ -1,12 +1,13 @@
 import { Typography } from "potion-ui";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 
-interface Column<T> {
+export interface Column<T> {
   key: keyof T;
   header: string;
+  render?: (value: T[keyof T], row: T) => ReactNode;
 }
 
-interface DataTableProps<T> {
+export interface DataTableProps<T> {
   data: T[];
   columns: Column<T>[];
   itemsPerPage?: number;
@@ -52,7 +53,11 @@ function DataTable<T>({
             >
               {columns.map((column) => (
                 <td key={String(column.key)} className="p-2 border-t">
-                  <Typography>{String(row[column.key])}</Typography>
+                  {column.render ? (
+                    column.render(row[column.key], row)
+                  ) : (
+                    <Typography>{String(row[column.key])}</Typography>
+                  )}
                 </td>
               ))}
             </tr>
