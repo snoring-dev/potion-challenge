@@ -13,6 +13,10 @@ export interface ModalProps {
   renderTrigger?: (openAction: () => void) => ReactNode;
 }
 
+type ChildProps = {
+  closeModal: () => void;
+};
+
 export const Modal: React.FC<ModalProps & PropsWithChildren> = ({
   title,
   renderTrigger,
@@ -27,6 +31,15 @@ export const Modal: React.FC<ModalProps & PropsWithChildren> = ({
   function close() {
     setIsOpen(false);
   }
+
+  const childrenWithClose = React.Children.map(children, (child) => {
+    if (React.isValidElement(child)) {
+      return React.cloneElement(child as React.ReactElement<ChildProps>, {
+        closeModal: close,
+      });
+    }
+    return child;
+  });
 
   return (
     <>
@@ -58,7 +71,7 @@ export const Modal: React.FC<ModalProps & PropsWithChildren> = ({
                 {title}
               </DialogTitle>
               <div className="w-full h-px bg-white-active mt-2" />
-              <div className="flex flex-col my-4">{children}</div>
+              <div className="flex flex-col my-4">{childrenWithClose}</div>
               <IconButton
                 className="absolute top-2 right-2"
                 icon={IoCloseSharp}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import { Description, Field, Textarea, Label } from "@headlessui/react";
 import { Typography } from "../Typography";
 import { cva, type VariantProps } from "class-variance-authority";
@@ -39,63 +39,67 @@ export interface TextFieldProps
   errorMessage?: string;
 }
 
-export const TextField: React.FC<TextFieldProps> = ({
-  className,
-  variant,
-  size,
-  label,
-  description,
-  errorMessage,
-  ...props
-}) => {
-  return (
-    <Field>
-      {label && (
-        <Label>
-          <Typography className="font-semibold text-base text-ink-700">
-            {label}
-          </Typography>
-        </Label>
-      )}
-      {description && (
-        <Description>
-          <Typography variant="small" className="text-ink-100">
-            {description}
-          </Typography>
-        </Description>
-      )}
-      <div
-        className={cn(
-          textareaVariants({
-            variant,
-            size,
-            className,
-            isDisabled: props.disabled,
-          })
+export const TextField = forwardRef<HTMLTextAreaElement, TextFieldProps>(
+  (
+    { className, variant, size, label, description, errorMessage, ...props },
+    ref
+  ) => {
+    return (
+      <Field>
+        {label && (
+          <Label>
+            <Typography className="font-semibold text-base text-ink-700">
+              {label}
+            </Typography>
+          </Label>
         )}
-      >
-        <Textarea
-          {...props}
-          aria-describedby={
-            description ? description : errorMessage ? errorMessage : undefined
-          }
+        {description && (
+          <Description>
+            <Typography variant="small" className="text-ink-100">
+              {description}
+            </Typography>
+          </Description>
+        )}
+        <div
           className={cn(
-            "w-full focus:outline-none disabled:bg-transparent disabled:cursor-not-allowed resize-none",
-            size === "small"
-              ? "px-2 py-2"
-              : size === "large"
-                ? "px-4 py-4"
-                : "px-3 py-3"
+            textareaVariants({
+              variant,
+              size,
+              className,
+              isDisabled: props.disabled,
+            })
           )}
-        />
-      </div>
-      {errorMessage && (
-        <Description>
-          <Typography variant="small" className="text-red-300">
-            {errorMessage}
-          </Typography>
-        </Description>
-      )}
-    </Field>
-  );
-};
+        >
+          <Textarea
+            {...props}
+            aria-describedby={
+              description
+                ? description
+                : errorMessage
+                  ? errorMessage
+                  : undefined
+            }
+            ref={ref}
+            className={cn(
+              "w-full h-full focus:outline-none disabled:bg-transparent disabled:cursor-not-allowed resize-none",
+              size === "small"
+                ? "px-2 py-2"
+                : size === "large"
+                  ? "px-4 py-4"
+                  : "px-3 py-3"
+            )}
+          />
+        </div>
+        {errorMessage && (
+          <Description>
+            <Typography variant="small" className="text-red-300">
+              {errorMessage}
+            </Typography>
+          </Description>
+        )}
+      </Field>
+    );
+  }
+);
+
+TextField.displayName = "TextField";

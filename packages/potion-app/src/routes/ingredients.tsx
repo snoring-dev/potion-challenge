@@ -1,4 +1,8 @@
-import { createFileRoute, useLoaderData } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  useLoaderData,
+  useNavigate,
+} from "@tanstack/react-router";
 import { Button, Modal, Typography } from "potion-ui";
 import { fetchIngredients } from "../services/ingredient";
 import DataTable, { Column } from "../components/DataTable";
@@ -17,8 +21,25 @@ function Ingredients() {
     select: (data: unknown): IngredientType[] => data as IngredientType[],
   });
 
+  const navigate = useNavigate();
+
+  const refreshPage = () => {
+    navigate({ to: "/ingredients", search: {}, hash: "" });
+  };
+
   const columns: Array<Column<IngredientType>> = [
-    { key: "id", header: "ID" },
+    {
+      key: "id",
+      header: "ID",
+      render: (value) => (
+        <Typography
+          className="cursor-pointer hover:border-blue-600 hover:text-blue-600 transition-all duration-200 uppercase text-xs text-blue-300 border w-fit p-1 border-blue-300 rounded-sm"
+          variant="small"
+        >
+          #{value}
+        </Typography>
+      ),
+    },
     { key: "name", header: "Name" },
     { key: "shortDescription", header: "Description" },
     {
@@ -49,7 +70,7 @@ function Ingredients() {
             />
           )}
         >
-          <AddIngredientForm />
+          <AddIngredientForm onSuccess={refreshPage} />
         </Modal>
       </div>
       <IngredientTable data={ingredients} columns={columns} itemsPerPage={20} />

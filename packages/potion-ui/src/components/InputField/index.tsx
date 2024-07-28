@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import { Description, Field, Input, Label } from "@headlessui/react";
 import { Typography } from "../Typography";
 import { cva, type VariantProps } from "class-variance-authority";
@@ -54,60 +54,72 @@ export interface InputFieldProps
   iconRight?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
 }
 
-export const InputField: React.FC<InputFieldProps> = ({
-  className,
-  variant,
-  size,
-  label,
-  description,
-  errorMessage,
-  iconLeft: IconLeft,
-  iconRight: IconRight,
-  ...props
-}) => {
-  return (
-    <Field>
-      {label && (
-        <Label>
-          <Typography className="font-semibold text-base text-ink-700">
-            {label}
-          </Typography>
-        </Label>
-      )}
-      {description && (
-        <Description>
-          <Typography variant="small" className="text-ink-100">
-            {description}
-          </Typography>
-        </Description>
-      )}
-      <div
-        className={cn(
-          inputVariants({
-            variant,
-            size,
-            className,
-            isDisabled: props.disabled,
-          })
+export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
+  (
+    {
+      className,
+      variant,
+      size,
+      label,
+      description,
+      errorMessage,
+      iconLeft: IconLeft,
+      iconRight: IconRight,
+      ...props
+    },
+    ref
+  ) => {
+    return (
+      <Field>
+        {label && (
+          <Label>
+            <Typography className="font-semibold text-base text-ink-700">
+              {label}
+            </Typography>
+          </Label>
         )}
-      >
-        {IconLeft && <IconLeft className={cn(iconVariants({ size }))} />}
-        <Input
-          {...props}
-          aria-describedby={
-            description ? description : errorMessage ? errorMessage : undefined
-          }
-          className="w-full focus:outline-none disabled:bg-transparent disabled:cursor-not-allowed"
-        />
-        {IconRight && <IconRight className={cn(iconVariants({ size }))} />}
-      </div>
-      {errorMessage && (
-        <Description>
-          <Typography variant="small" className="text-red-300">
-            {errorMessage}
-          </Typography>
-        </Description>
-      )}
-    </Field>
-  );
-};
+        {description && (
+          <Description>
+            <Typography variant="small" className="text-ink-100">
+              {description}
+            </Typography>
+          </Description>
+        )}
+        <div
+          className={cn(
+            inputVariants({
+              variant,
+              size,
+              className,
+              isDisabled: props.disabled,
+            })
+          )}
+        >
+          {IconLeft && <IconLeft className={cn(iconVariants({ size }))} />}
+          <Input
+            {...props}
+            ref={ref}
+            aria-describedby={
+              description
+                ? description
+                : errorMessage
+                  ? errorMessage
+                  : undefined
+            }
+            className="w-full focus:outline-none disabled:bg-transparent disabled:cursor-not-allowed"
+          />
+          {IconRight && <IconRight className={cn(iconVariants({ size }))} />}
+        </div>
+        {errorMessage && (
+          <Description>
+            <Typography variant="small" className="text-red-300">
+              {errorMessage}
+            </Typography>
+          </Description>
+        )}
+      </Field>
+    );
+  }
+);
+
+InputField.displayName = "InputField";

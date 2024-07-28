@@ -27,3 +27,24 @@ export const updateInventory = async (
     throw new Error("Failed to update inventory");
   }
 };
+
+export const createIngredient = async ({
+  name,
+  shortDescription,
+  inventory,
+}: Partial<Ingredient>): Promise<Ingredient> => {
+  try {
+    const resp = await axios.post<Ingredient>(
+      `http://localhost:58300/api/ingredients`,
+      {
+        name,
+        shortDescription,
+        inventory,
+      }
+    );
+
+    return resp.data;
+  } catch (err) {
+    throw new Error("Failed to create a new ingredient");
+  }
+};
