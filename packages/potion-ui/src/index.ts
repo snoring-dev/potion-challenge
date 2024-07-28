@@ -7,6 +7,7 @@ import { KeyValue } from "./components/KeyValue";
 import { List } from "./components/List";
 import { ListItem } from "./components/ListItem";
 import { MiniCard } from "./components/MiniCard";
+import { Modal } from "./components/Modal";
 import { PotionArticle } from "./components/PotionArticle";
 import { PotionMetrics } from "./components/PotionMetrics";
 import { Rating } from "./components/Rating";
@@ -29,4 +30,5 @@ export {
   PotionMetrics,
   Rating,
   IconButton,
+  Modal,
 };

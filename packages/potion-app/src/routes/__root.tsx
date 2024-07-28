@@ -17,9 +17,9 @@ function Layout() {
     <>
       <Navbar
         logo="https://res.cloudinary.com/mjemmoudi/image/upload/v1722165960/potion_icon_terykh.png"
-        brandName="Flowbite"
+        brandName="PotionLab"
         navItems={navItems}
-        ctaButtonLabel="Get started"
+        ctaButtonLabel="Nouveau potion"
         onCtaClick={() => {}}
       />
       <div className="my-32">
