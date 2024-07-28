@@ -11,6 +11,7 @@ import { Modal } from "./components/Modal";
 import { PotionArticle } from "./components/PotionArticle";
 import { PotionMetrics } from "./components/PotionMetrics";
 import { Rating } from "./components/Rating";
+import { TextField } from "./components/TextField";
 import { Typography } from "./components/Typography";
 
 import "./index.css";
@@ -31,4 +32,5 @@ export {
   Rating,
   IconButton,
   Modal,
+  TextField,
 };
