@@ -14,7 +14,5 @@ function Index() {
     select: (data: unknown): PotionType[] => data as PotionType[],
   });
 
-  console.log("Fetched Potions:", potions);
-
   return <PotionList potions={potions} />;
 }

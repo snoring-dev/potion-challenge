@@ -9,7 +9,7 @@ export const Route = createRootRoute({
           Home
         </Link>{" "}
         <Link to="/ingredients" className="[&.active]:font-bold">
-          About
+          Ingredients
         </Link>
         <Link
           params={{ potionId: "123" }}
