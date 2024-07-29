@@ -1,10 +1,21 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
+import { z } from "zod";
 import prisma from "./lib/prisma";
 
-const app = new Hono().basePath('/api');
+const app = new Hono().basePath("/api");
 
-app.use("/api/*", cors());
+app.use(
+  "/*",
+  cors({
+    origin: process.env.FRONT_APP as string,
+    allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowHeaders: ["Content-Type", "Authorization"],
+    exposeHeaders: ["Content-Length"],
+    maxAge: 600,
+    credentials: true,
+  })
+);
 
 app.get("/potions", async (c) => {
   const potions = await prisma.potion.findMany({
@@ -133,6 +144,38 @@ app.delete("/potions/:potionId/ingredients/:ingredientId", async (c) => {
     },
   });
   return c.json({ message: "Ingredient removed from potion successfully" });
+});
+
+app.post("/ingredients/:id/inventory", async (c) => {
+  const id = c.req.param("id");
+  const body = await c.req.json();
+
+  const schema = z.object({
+    inventory: z.number().int().nonnegative(),
+  });
+
+  const result = schema.safeParse(body);
+
+  if (!result.success) {
+    return c.json(
+      { error: "Invalid input", details: result.error.issues },
+      400
+    );
+  }
+
+  const { inventory } = result.data;
+
+  try {
+    const updatedIngredient = await prisma.ingredient.update({
+      where: { id },
+      data: { inventory },
+    });
+
+    return c.json(updatedIngredient);
+  } catch (error) {
+    console.error("Failed to update ingredient inventory:", error);
+    return c.json({ error: "Failed to update ingredient inventory" }, 500);
+  }
 });
 
 export default app;

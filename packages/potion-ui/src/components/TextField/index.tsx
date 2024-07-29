@@ -1,11 +1,11 @@
 import React, { forwardRef } from "react";
-import { Description, Field, Input, Label } from "@headlessui/react";
+import { Description, Field, Textarea, Label } from "@headlessui/react";
 import { Typography } from "../Typography";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../lib";
 
-const inputVariants = cva(
-  "flex flex-row space-x-2 items-center justify-center bg-white text-ink-50 focus-within:text-ink-300 border rounded-[3px] transition-all duration-300",
+const textareaVariants = cva(
+  "flex flex-col bg-white text-ink-50 focus-within:text-ink-300 border rounded-[3px] transition-all duration-300",
   {
     variants: {
       variant: {
@@ -15,9 +15,9 @@ const inputVariants = cva(
           "border-red-500 focus-within:border-red-600 focus-within:shadow-input-error",
       },
       size: {
-        small: "px-2 py-2 text-sm mt-1 w-full",
-        normal: "px-3 py-3 text-base mt-1 w-full",
-        large: "px-4 py-4 text-lg mt-1 w-full",
+        small: "text-sm mt-1 w-full",
+        normal: "text-base mt-1 w-full",
+        large: "text-lg mt-1 w-full",
       },
       isDisabled: {
         true: "bg-cloud-300 border-cloud-700 text-ink-50 cursor-not-allowed",
@@ -31,42 +31,17 @@ const inputVariants = cva(
   }
 );
 
-const iconVariants = cva("", {
-  variants: {
-    size: {
-      small: "w-3 h-3",
-      normal: "w-4 h-4",
-      large: "w-5 h-5",
-    },
-  },
-  defaultVariants: {
-    size: "normal",
-  },
-});
-
-export interface InputFieldProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size">,
-    VariantProps<typeof inputVariants> {
+export interface TextFieldProps
+  extends Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, "size">,
+    VariantProps<typeof textareaVariants> {
   label?: string;
   description?: string;
   errorMessage?: string;
-  iconLeft?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
-  iconRight?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
 }
 
-export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
+export const TextField = forwardRef<HTMLTextAreaElement, TextFieldProps>(
   (
-    {
-      className,
-      variant,
-      size,
-      label,
-      description,
-      errorMessage,
-      iconLeft: IconLeft,
-      iconRight: IconRight,
-      ...props
-    },
+    { className, variant, size, label, description, errorMessage, ...props },
     ref
   ) => {
     return (
@@ -87,7 +62,7 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
         )}
         <div
           className={cn(
-            inputVariants({
+            textareaVariants({
               variant,
               size,
               className,
@@ -95,10 +70,8 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
             })
           )}
         >
-          {IconLeft && <IconLeft className={cn(iconVariants({ size }))} />}
-          <Input
+          <Textarea
             {...props}
-            ref={ref}
             aria-describedby={
               description
                 ? description
@@ -106,9 +79,16 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
                   ? errorMessage
                   : undefined
             }
-            className="w-full focus:outline-none disabled:bg-transparent disabled:cursor-not-allowed"
+            ref={ref}
+            className={cn(
+              "w-full h-full focus:outline-none disabled:bg-transparent disabled:cursor-not-allowed resize-none",
+              size === "small"
+                ? "px-2 py-2"
+                : size === "large"
+                  ? "px-4 py-4"
+                  : "px-3 py-3"
+            )}
           />
-          {IconRight && <IconRight className={cn(iconVariants({ size }))} />}
         </div>
         {errorMessage && (
           <Description>
@@ -122,4 +102,4 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
   }
 );
 
-InputField.displayName = "InputField";
+TextField.displayName = "TextField";

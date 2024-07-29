@@ -1,0 +1,28 @@
+export const initialValues = {
+  title: "",
+  creationDate: "",
+  rating: 0,
+  description: "",
+  details: "",
+  thumbnailUrl: "",
+  mainImageUrl: "",
+  metrics: {
+    potency: "",
+    duration: "",
+    difficulty: "",
+    sideEffects: "",
+  },
+  magicalBrewStats: {
+    arcanePotency: "",
+    etherealEssence: "",
+    corporealMass: "",
+    vitalForce: "",
+    mysticalResidue: "",
+    pureMagic: "",
+    elementalBalance: "",
+    spiritResonance: "",
+  },
+  instructions: [],
+  tags: [],
+  ingredients: [],
+};
