@@ -63,7 +63,7 @@ export const AddIngredientForm: React.FC<Props> = ({
     <>
       <form
         ref={formRef}
-        className="w-[450px] space-y-4"
+        className="w-full xl:w-[450px] xl:m-auto space-y-4"
         onSubmit={handleSubmit(onSubmit)}
       >
         <Controller

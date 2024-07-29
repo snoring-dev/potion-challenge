@@ -8,7 +8,7 @@ import { cn } from "../../lib";
 const articleHeaderVariants = cva("flex flex-col", {
   variants: {
     variant: {
-      default: "space-y-2 md:space-y-4",
+      default: "",
       compact: "space-y-2",
       expanded: "space-y-4",
     },
@@ -19,7 +19,7 @@ const articleHeaderVariants = cva("flex flex-col", {
 });
 
 const Divider: React.FC = () => (
-  <div className="hidden md:block bg-cloud-500 w-[1px] h-6 mx-2 md:mx-6 relative top-1" />
+  <div className="bg-cloud-500 w-[1px] h-6 mx-6 relative top-1" />
 );
 
 interface MetadataItemProps {
@@ -33,12 +33,7 @@ const MetadataItem: React.FC<MetadataItemProps> = ({
   text,
   className,
 }) => (
-  <div
-    className={cn(
-      "flex flex-row items-center gap-1 text-base md:text-lg",
-      className
-    )}
-  >
+  <div className={cn("flex flex-row gap-1 text-lg mt-2", className)}>
     {icon}
     <Typography variant="small" className="font-light">
       {text}
@@ -65,10 +60,8 @@ export const ArticleHeader: React.FC<ArticleHeaderProps> = ({
 }) => {
   return (
     <header className={cn(articleHeaderVariants({ variant }), className)}>
-      <Typography variant="h1" className="text-2xl md:text-3xl lg:text-4xl">
-        {title}
-      </Typography>
-      <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0">
+      <Typography variant="h1">{title}</Typography>
+      <div className="flex flex-row items-center">
         <MetadataItem
           icon={<BsCalendar3 className="text-red-300" />}
           text={date}
@@ -81,7 +74,7 @@ export const ArticleHeader: React.FC<ArticleHeaderProps> = ({
           className="text-red-300 font-semibold"
         />
         <Divider />
-        <div className="sm:relative sm:top-1">
+        <div className="relative top-1">
           <Rating rating={rating} className="text-red-300" />
         </div>
       </div>
