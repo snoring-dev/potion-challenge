@@ -1,4 +1,5 @@
 import { ArticleHeader } from "./components/ActicleHeader";
+import { Alert } from "./components/Alert";
 import { AttributeList } from "./components/AttributeList";
 import { Button, IconButton } from "./components/Button";
 import { Card } from "./components/Card";
@@ -25,6 +26,7 @@ export {
   ArticleHeader,
   AttributeList,
   Card,
+  Alert,
   InputField,
   KeyValue,
   ListItem,

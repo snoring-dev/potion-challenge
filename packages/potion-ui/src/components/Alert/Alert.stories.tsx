@@ -9,7 +9,7 @@ import {
 import React from "react";
 
 const meta: Meta<typeof Alert> = {
-  title: "Components/Alert",
+  title: "Molecules/Alert",
   component: Alert,
   argTypes: {
     variant: {
@@ -43,7 +43,8 @@ export const Success: Story = {
   args: {
     variant: "success",
     title: "Success message",
-    description: "This is a success message. Everything worked as expected.",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     icon: FaCheckCircle,
     primaryAction: {
       label: "Continue",
@@ -61,7 +62,8 @@ export const Error: Story = {
     ...Success.args,
     variant: "error",
     title: "Error message",
-    description: "An error occurred. Please try again later.",
+    description:
+      "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     icon: FaExclamationCircle,
   },
 };
@@ -71,7 +73,8 @@ export const Warning: Story = {
     ...Success.args,
     variant: "warning",
     title: "Warning message",
-    description: "This action might have unexpected consequences.",
+    description:
+      "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
     icon: FaExclamationTriangle,
   },
 };
@@ -81,7 +84,8 @@ export const Info: Story = {
     ...Success.args,
     variant: "info",
     title: "Information message",
-    description: "Here's some information you might find useful.",
+    description:
+      "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     icon: FaInfoCircle,
   },
 };
@@ -101,26 +105,20 @@ export const WithoutActions: Story = {
   },
 };
 
-export const LongDescription: Story = {
-  args: {
-    ...Success.args,
-    description:
-      "This is a very long description that demonstrates how the Alert component handles larger amounts of text. It might wrap to multiple lines depending on the width of the container. The Alert should expand vertically to accommodate all of this text while maintaining its layout and style.",
-  },
-};
-
 export const WithRichTextDescription: Story = {
   args: {
     ...Success.args,
     description: (
       <>
-        This description contains <strong>rich text</strong>. You can include{" "}
+        Lorem ipsum dolor sit amet, <strong>consectetur adipiscing elit</strong>
+        . Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+        enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+        aliquip ex ea commodo consequat.{" "}
         <a href="#" className="underline">
-          links
+          Duis aute irure dolor
         </a>{" "}
-        and other HTML elements. Use this feature when you need to emphasize
-        certain parts of your message or provide interactive elements within the
-        alert.
+        in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+        pariatur.
       </>
     ),
   },

@@ -5,7 +5,7 @@ import { Typography } from "../Typography";
 import { Button } from "../Button";
 
 const alertVariants = cva(
-  "flex gap-2 text-sm rounded border border-solid backdrop-blur-sm",
+  "flex gap-2 text-sm rounded border border-solid backdrop-blur-sm relative overflow-hidden",
   {
     variants: {
       variant: {
@@ -21,7 +21,7 @@ const alertVariants = cva(
   }
 );
 
-const stripVariants = cva("shrink-0 h-[136px] w-[3px]", {
+const stripVariants = cva("shrink-0 absolute top-0 bottom-0 w-[4px]", {
   variants: {
     variant: {
       success: "bg-green-600",
@@ -62,7 +62,7 @@ export const Alert: React.FC<AlertProps> = ({
   return (
     <div className={cn(alertVariants({ variant, className }))} {...props}>
       <div className={stripVariants({ variant })} />
-      <div className="flex flex-1 gap-2 pt-3 pr-3 pb-4 max-md:flex-wrap">
+      <div className="flex flex-1 gap-2 pl-4 pt-3 pr-3 pb-4 max-md:flex-wrap">
         {Icon && <Icon className="shrink-0 self-start w-5 h-5" />}
         <div className="flex flex-col flex-1 max-md:max-w-full">
           <Typography variant="h4" className="font-bold text-zinc-800">

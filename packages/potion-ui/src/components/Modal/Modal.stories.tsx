@@ -17,17 +17,21 @@ const meta: Meta<typeof Modal> = {
 export default meta;
 type Story = StoryObj<typeof Modal>;
 
+const ResponsiveModalContent = () => (
+  <div className="w-full max-w-[450px] space-y-4">
+    <InputField label="Name" size="small" />
+    <InputField label="Description" size="small" />
+    <div className="flex justify-end items-center pt-6">
+      <Button label="Submit" variant="info" />
+    </div>
+  </div>
+);
+
 export const Default: Story = {
   render: () => {
     return (
       <Modal title="Create a new potion">
-        <div className="w-[450px] space-y-4">
-          <InputField label="Name" size="small" />
-          <InputField label="Description" size="small" />
-          <div className="flex justify-end items-center pt-6">
-            <Button label="Submit" variant="info" />
-          </div>
-        </div>
+        <ResponsiveModalContent />
       </Modal>
     );
   },
@@ -39,16 +43,16 @@ export const WithCustomTrigger: Story = {
       <Modal
         title="Create a new potion"
         renderTrigger={(openAction) => (
-          <Button label="Create Ingredient" onClick={openAction} variant="info" size="large" />
+          <Button
+            label="Create Ingredient"
+            onClick={openAction}
+            variant="info"
+            size="large"
+            className="w-full sm:w-auto"
+          />
         )}
       >
-        <div className="w-[450px] space-y-4">
-          <InputField label="Name" size="small" />
-          <InputField label="Description" size="small" />
-          <div className="flex justify-end items-center pt-6">
-            <Button label="Submit" variant="info" />
-          </div>
-        </div>
+        <ResponsiveModalContent />
       </Modal>
     );
   },

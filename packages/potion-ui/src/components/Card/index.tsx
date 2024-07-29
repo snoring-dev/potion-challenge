@@ -20,7 +20,7 @@ const cardVariants = cva(
 );
 
 const Tag: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <span className="rounded-full p-2 font-light text-xs border border-cloud-100 text-cloud-500">
+  <span className="rounded-full p-2 font-light text-xs border border-cloud-300 text-cloud-700">
     {children}
   </span>
 );
@@ -47,15 +47,15 @@ const CardBody = ({ title, description, tags = [] }: Partial<CardProps>) => (
     </Typography>
     {tags?.length > 0 ? (
       <>
-        <div className="bg-white-active w-full h-[1px]"></div>
+        <div className="bg-white-active w-full h-[1px] mt-4"></div>
         <div>
           <Typography
             variant="small"
-            className="font-semibold text-xs uppercase my-2"
+            className="font-semibold text-xs uppercase"
           >
             keywords:
           </Typography>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2 mt-1">
             {tags.map((tag, index) => (
               <Tag key={index}>{tag}</Tag>
             ))}

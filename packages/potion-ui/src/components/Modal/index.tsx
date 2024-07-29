@@ -58,20 +58,22 @@ export const Modal: React.FC<ModalProps & PropsWithChildren> = ({
         onClose={close}
       >
         <DialogBackdrop className="fixed inset-0 bg-black/30" />
-        <div className="fixed inset-0 z-10 w-fit m-auto overflow-y-auto">
+        <div className="fixed inset-0 z-10 overflow-y-auto">
           <div className="flex min-h-full items-center justify-center p-4">
             <DialogPanel
               transition
-              className="relative w-full bg-white border border-white-active flex flex-col p-10 rounded-xl shadow-sm items-center justify-center backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
+              className="relative w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl bg-white border border-white-active flex flex-col p-4 sm:p-6 md:p-8 lg:p-10 rounded-xl shadow-sm items-center justify-center backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
             >
               <DialogTitle
                 as="h3"
-                className="font-nunito-sans font-semibold text-xl"
+                className="font-nunito-sans font-semibold text-lg sm:text-xl md:text-2xl"
               >
                 {title}
               </DialogTitle>
               <div className="w-full h-px bg-white-active mt-2" />
-              <div className="flex flex-col my-4">{childrenWithClose}</div>
+              <div className="flex flex-col my-4 w-full">
+                {childrenWithClose}
+              </div>
               <IconButton
                 className="absolute top-2 right-2"
                 icon={IoCloseSharp}
