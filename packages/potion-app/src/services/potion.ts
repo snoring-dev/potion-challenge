@@ -12,6 +12,17 @@ export const fetchPotions = async (): Promise<PotionType[]> => {
   }
 };
 
+export const getSinglePotion = async (id: string): Promise<PotionType> => {
+  try {
+    const resp = await axios.get<PotionType>(
+      `http://localhost:58300/api/potions/${id}`
+    );
+    return resp.data;
+  } catch (err) {
+    throw new Error(`Failed to fetch potion with id=${id}`);
+  }
+};
+
 export const savePotion = async (data: PotionFormData): Promise<PotionType> => {
   try {
     const resp = await axios.post<PotionType>(
