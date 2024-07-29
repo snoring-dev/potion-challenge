@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { List, ListEntry } from "../List";
 import { InputField } from "../InputField";
 import { Button } from "../Button";
@@ -21,12 +21,12 @@ export const InstructionsField: React.FC<InstructionsFieldProps> = ({
 
   const addInstruction = useCallback(() => {
     if (fieldValue.trim()) {
-      setItems([...items, { label: fieldValue.trim() }]);
+      const newItems = [...items, { label: fieldValue.trim() }];
+      setItems(newItems);
+      onChange(newItems);
       setFieldValue("");
     }
-  }, [fieldValue, items]);
-
-  useEffect(() => onChange(items), [items, onChange]);
+  }, [fieldValue, items, onChange]);
 
   return (
     <div className="flex flex-col space-y-4">

@@ -1,14 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { IngredientBox, Typography } from "potion-ui";
 import { Control, useWatch } from "react-hook-form";
-import { PotionFormValues } from "./schema";
+import { CustomSetValueFunction, PotionFormValues } from "./schema";
 import { Ingredient as IngredientType } from "../../types/Ingredient";
 import { randomIntBetween } from "../../utils";
-
-type FormNames = keyof PotionFormValues;
-
-type CustomSetValueFunction = (id: FormNames, value: any) => void;
 
 interface IngredientTabProps {
   formControl: Control<PotionFormValues>;
@@ -29,8 +25,6 @@ export const IngredientTab: React.FC<IngredientTabProps> = ({
     control: formControl,
     name: "ingredients",
   });
-
-  console.log({ watchedIngredients, selectedIngredients });
 
   return (
     <div className="p-2 sm:p-4">

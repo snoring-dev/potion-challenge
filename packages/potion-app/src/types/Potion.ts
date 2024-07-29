@@ -26,7 +26,7 @@ export interface Potion {
   ingredients: PotionIngredient[];
 }
 
-export type PotionFormData = Omit<Potion, "ingredients"> & {
+export type PotionFormData = Omit<Potion, "ingredients" | "id"> & {
   ingredients: {
     id: string;
     quantity: number;
