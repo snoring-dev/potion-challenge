@@ -13,7 +13,7 @@ function Layout() {
   const navItems = [
     { label: "Accueil", href: "/" },
     { label: "Ingredients", href: "/ingredients" },
-    { label: "Potion au hasard", href: "/potion/123" },
+    { label: "Potion au hasard", href: "/random-potion" },
   ];
 
   const redirectToCreatePotion = useCallback(() => {

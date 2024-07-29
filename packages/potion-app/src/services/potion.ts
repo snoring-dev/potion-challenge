@@ -23,6 +23,17 @@ export const getSinglePotion = async (id: string): Promise<PotionType> => {
   }
 };
 
+export const getRandomPotion = async (): Promise<PotionType> => {
+  try {
+    const resp = await axios.get<PotionType>(
+      "http://localhost:58300/api/potions/random"
+    );
+    return resp.data;
+  } catch (err) {
+    throw new Error(`Failed to fetch a random potion`);
+  }
+};
+
 export const savePotion = async (data: PotionFormData): Promise<PotionType> => {
   try {
     const resp = await axios.post<PotionType>(

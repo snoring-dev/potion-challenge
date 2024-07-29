@@ -1,12 +1,17 @@
 import React from "react";
 import { Card, Typography } from "potion-ui";
 import { Potion } from "../types/Potion";
+import { useNavigate } from "@tanstack/react-router";
 
 interface PotionListProps {
   potions: Potion[];
 }
 
 export const PotionList: React.FC<PotionListProps> = ({ potions }) => {
+  const navigate = useNavigate();
+
+  const redirectToPotion = (id: string) => navigate({ to: `/potion/${id}` });
+
   return (
     <div className="min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -29,8 +34,7 @@ export const PotionList: React.FC<PotionListProps> = ({ potions }) => {
                   tags={potion.tags.map((t) => `#${t}`)}
                   primaryAction={{
                     label: "Discover",
-                    onClick: () =>
-                      console.log(`should go to page: /potion/${potion.id}`),
+                    onClick: () => redirectToPotion(potion.id),
                   }}
                 />
               </div>

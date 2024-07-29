@@ -57,6 +57,49 @@ app.post("/potions", async (c) => {
   return c.json(newPotion, 201);
 });
 
+app.get("/potions/random", async (c) => {
+  try {
+    const potionCount = await prisma.potion.count();
+    const randomIndex = Math.floor(Math.random() * potionCount);
+    const randomPotion = await prisma.potion.findMany({
+      take: 1,
+      skip: randomIndex,
+      include: {
+        ingredients: {
+          include: {
+            ingredient: true,
+          },
+        },
+      },
+    });
+
+    if (randomPotion.length === 0) {
+      return c.json({ message: "No potions available" }, 404);
+    }
+
+    const potion = randomPotion[0];
+
+    const suggestedPotions = await prisma.potion.findMany({
+      where: {
+        id: {
+          not: potion.id,
+        },
+      },
+      take: 3,
+    });
+
+    const response = {
+      ...potion,
+      suggestedPotions,
+    };
+
+    return c.json(response);
+  } catch (error) {
+    console.error(error);
+    return c.json({ message: "Internal Server Error" }, 500);
+  }
+});
+
 app.get("/potions/:id", async (c) => {
   const id = c.req.param("id");
   const potion = await prisma.potion.findUnique({
