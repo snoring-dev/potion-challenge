@@ -1,11 +1,9 @@
-import axios from "axios";
 import { Ingredient } from "../types/Ingredient";
+import { api } from "../utils/api";
 
 export const fetchIngredients = async (): Promise<Ingredient[]> => {
   try {
-    const resp = await axios.get<Ingredient[]>(
-      "http://localhost:58300/api/ingredients"
-    );
+    const resp = await api.get<Ingredient[]>("/ingredients");
     return resp.data;
   } catch (err) {
     throw new Error("Failed to fetch ingredients");
@@ -17,10 +15,9 @@ export const updateInventory = async (
   value: number
 ): Promise<Ingredient> => {
   try {
-    const resp = await axios.post<Ingredient>(
-      `http://localhost:58300/api/ingredients/${id}/inventory`,
-      { inventory: value }
-    );
+    const resp = await api.post<Ingredient>(`/ingredients/${id}/inventory`, {
+      inventory: value,
+    });
 
     return resp.data;
   } catch (err) {
@@ -34,14 +31,11 @@ export const createIngredient = async ({
   inventory,
 }: Partial<Ingredient>): Promise<Ingredient> => {
   try {
-    const resp = await axios.post<Ingredient>(
-      `http://localhost:58300/api/ingredients`,
-      {
-        name,
-        shortDescription,
-        inventory,
-      }
-    );
+    const resp = await api.post<Ingredient>(`/ingredients`, {
+      name,
+      shortDescription,
+      inventory,
+    });
 
     return resp.data;
   } catch (err) {

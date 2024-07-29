@@ -1,5 +1,5 @@
 import { IconButton, Typography } from "potion-ui";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { FaPlus, FaMinus } from "react-icons/fa";
 import { updateInventory } from "../services/ingredient";
 import { useDebounce } from "@uidotdev/usehooks";
@@ -10,6 +10,7 @@ export const IngredientInventory: React.FC<{
 }> = ({ value, id }) => {
   const [stock, setStock] = useState(value);
   const inventoryValue = useDebounce(stock, 500);
+  const initialRender = useRef(true);
 
   useEffect(() => {
     const updateStock = async () => {
@@ -18,13 +19,20 @@ export const IngredientInventory: React.FC<{
       } catch (err) {
         console.log(err);
       }
+    };
+
+    if (initialRender.current) {
+      initialRender.current = false;
+    } else if (inventoryValue !== value) {
+      updateStock();
     }
+  }, [id, inventoryValue, value]);
 
-    updateStock();
-  }, [id, inventoryValue]);
-
-  const increment = useCallback(() => setStock(prev => prev + 1), []);
-  const decrement = useCallback(() => setStock(prev => Math.max(0, prev - 1)), []);
+  const increment = useCallback(() => setStock((prev) => prev + 1), []);
+  const decrement = useCallback(
+    () => setStock((prev) => Math.max(0, prev - 1)),
+    []
+  );
 
   return (
     <div className="flex flex-row border border-gray-200 rounded-md p-1 w-fit">
