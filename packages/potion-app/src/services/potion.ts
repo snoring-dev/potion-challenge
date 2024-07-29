@@ -1,11 +1,25 @@
 import axios from "axios";
-import { Potion as PotionType } from "../types/Potion";
+import { PotionFormData, Potion as PotionType } from "../types/Potion";
 
 export const fetchPotions = async (): Promise<PotionType[]> => {
   try {
-    const resp = await axios.get<PotionType[]>('http://localhost:58300/api/potions');
+    const resp = await axios.get<PotionType[]>(
+      "http://localhost:58300/api/potions"
+    );
     return resp.data;
   } catch (err) {
-    throw new Error('Failed to fetch potions');
+    throw new Error("Failed to fetch potions");
+  }
+};
+
+export const savePotion = async (data: PotionFormData): Promise<PotionType> => {
+  try {
+    const resp = await axios.post<PotionType>(
+      "http://localhost:58300/api/potions",
+      data
+    );
+    return resp.data;
+  } catch (err) {
+    throw new Error("Failed to save a new potion");
   }
 };

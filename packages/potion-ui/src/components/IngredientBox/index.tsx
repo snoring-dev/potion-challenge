@@ -4,23 +4,27 @@ import { Typography } from "../Typography";
 import { cn } from "@/lib";
 
 export interface IngredientBoxProps {
+  id?: string | number;
   title: string;
   description?: string;
-  onChange?: (checked: boolean) => void;
+  onChange?: (checked: boolean, id: string | number | undefined) => void;
+  checked?: boolean;
 }
 
 export const IngredientBox: React.FC<IngredientBoxProps> = ({
   title,
   description,
   onChange,
+  checked = false,
+  id,
 }) => {
-  const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState(checked);
 
   const handleToggle = () => {
     const newCheckedState = !isChecked;
     setIsChecked(newCheckedState);
     if (onChange) {
-      onChange(newCheckedState);
+      onChange(newCheckedState, id);
     }
   };
 
