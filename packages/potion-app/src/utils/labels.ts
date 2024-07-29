@@ -26,5 +26,7 @@ export const potionLabels = {
   mainImageUrl: "URL de l'image principale",
   instructions: "Instructions",
   tags: "Mots-clés",
-  ingredients: "Ingrédients"
+  ingredients: "Ingrédients",
+  metrics: "Métriques",
+  magicalBrewStats: "Attributs Magique",
 };

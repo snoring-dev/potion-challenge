@@ -69,10 +69,26 @@ app.get("/potions/:id", async (c) => {
       },
     },
   });
+
   if (!potion) {
     return c.json({ message: "Potion not found" }, 404);
   }
-  return c.json(potion);
+
+  const suggestedPotions = await prisma.potion.findMany({
+    where: {
+      id: {
+        not: id,
+      },
+    },
+    take: 3,
+  });
+
+  const response = {
+    ...potion,
+    suggestedPotions,
+  };
+
+  return c.json(response);
 });
 
 app.get("/ingredients", async (c) => {

@@ -1,10 +1,19 @@
-import { createFileRoute, useLoaderData } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  useLoaderData,
+  useNavigate,
+} from "@tanstack/react-router";
 import { getSinglePotion } from "../services/potion";
-import { PotionArticle } from "potion-ui";
+import { AttributeList, MiniCard, PotionArticle, Typography } from "potion-ui";
 import { GiHealthPotion } from "react-icons/gi";
 import { formatDate } from "../utils";
 import { Metrics } from "../types/Metrics";
-import { metricLabels } from "../utils/labels";
+import { MagicalBrewStats } from "../types/MagicalBrewStats";
+import {
+  magicalBrewStatsLabels,
+  metricLabels,
+  potionLabels,
+} from "../utils/labels";
 
 export const Route = createFileRoute("/potion/$potionId")({
   loader: ({ params }) => getSinglePotion(params.potionId),
@@ -15,6 +24,10 @@ function SinglePotionPage() {
   const potion = useLoaderData({
     from: "/potion/$potionId",
   });
+
+  const navigate = useNavigate();
+
+  const redirectToPotion = (id: string) => navigate({ to: `/potion/${id}` });
 
   if (!potion) {
     return <div>Potion not found!</div>;
@@ -61,12 +74,45 @@ function SinglePotionPage() {
             }}
           />
         </div>
-        <div className="w-full md:w-1/3 p-4 bg-gray-100">
-          <h2 className="text-xl font-bold mb-4">Right Panel</h2>
-          <p>
-            This is the right panel. It takes up 1/3 of the width on larger
-            screens and full width on mobile.
-          </p>
+        <div className="w-full md:w-1/3 p-4 xs:border-t sm:border-t md:border-t-0 md:border-l border-gray-200">
+          <AttributeList
+            className="w-full max-w-full"
+            title={potionLabels.magicalBrewStats}
+            values={[
+              ...Object.keys(potion.magicalBrewStats).map((stat) => ({
+                key: magicalBrewStatsLabels[
+                  stat as keyof typeof magicalBrewStatsLabels
+                ],
+                value: potion.magicalBrewStats[stat as keyof MagicalBrewStats],
+              })),
+            ]}
+          />
+          <div className="py-6">
+            <Typography variant="h3">Potions recommendés</Typography>
+            <div className="bg-white-active h-[1px] my-1 mb-4"></div>
+            {potion.suggestedPotions &&
+              potion.suggestedPotions?.length > 0 &&
+              potion.suggestedPotions.map((sp, index) => {
+                const isLast =
+                  index == (potion?.suggestedPotions?.length ?? 1) - 1;
+                return (
+                  <>
+                    <MiniCard
+                      description={sp.description}
+                      energyLevel={sp.metrics.potency}
+                      imageAlt={sp.title}
+                      imageUrl={sp.thumbnailUrl}
+                      rating={sp.rating}
+                      title={sp.title}
+                      onClick={() => redirectToPotion(sp.id)}
+                    />
+                    {!isLast && (
+                      <div className="bg-white-active h-[1px] my-1"></div>
+                    )}
+                  </>
+                );
+              })}
+          </div>
         </div>
       </div>
     </div>

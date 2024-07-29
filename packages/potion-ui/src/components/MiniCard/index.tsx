@@ -51,6 +51,7 @@ export interface MiniCardProps extends VariantProps<typeof miniCardVariants> {
   rating: number;
   energyLevel: string;
   className?: string;
+  onClick?: () => void;
 }
 
 export const MiniCard: React.FC<MiniCardProps> = ({
@@ -63,9 +64,13 @@ export const MiniCard: React.FC<MiniCardProps> = ({
   rating,
   energyLevel,
   className,
+  onClick = () => {},
 }) => (
-  <div className={cn(miniCardVariants({ variant, size }), className)}>
-    <ImageWrapper src={imageUrl} alt={imageAlt} size={size ?? 'default'} />
+  <div
+    className={cn(miniCardVariants({ variant, size }), className)}
+    onClick={onClick}
+  >
+    <ImageWrapper src={imageUrl} alt={imageAlt} size={size ?? "default"} />
     <div className="w-full h-full pl-2">
       <Typography variant={size === "small" ? "h5" : "h4"}>{title}</Typography>
       <Rating rating={rating} />

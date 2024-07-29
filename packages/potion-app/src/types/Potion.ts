@@ -24,6 +24,7 @@ export interface Potion {
   instructions: string[];
   tags: string[];
   ingredients: PotionIngredient[];
+  suggestedPotions?: Potion[];
 }
 
 export type PotionFormData = Omit<Potion, "ingredients" | "id"> & {
