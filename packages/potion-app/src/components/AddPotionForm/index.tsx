@@ -2,7 +2,6 @@ import React, { useRef, useState } from "react";
 import { TabComponent, Button } from "potion-ui";
 import { TabItem } from "potion-ui/dist/src/components/TabComponent";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { PotionFormSchema, PotionFormValues } from "./schema";
 import { GeneralInfoTab } from "./GeneralInfoTab";
 import { IngredientTab } from "./IngredientTab";
@@ -49,7 +48,6 @@ export const AddPotionForm: React.FC<AddPotionFormProps> = ({
       rating: randomIntBetween(4, 5),
     };
 
-    // const { success, data, error } = PotionFormSchema.safeParse(values);
     const result = PotionFormSchema.safeParse(values);
 
     if (result.success) {
