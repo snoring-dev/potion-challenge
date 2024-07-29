@@ -23,12 +23,14 @@ const ListHeader: React.FC<{ title: string }> = ({ title }) => (
   </Typography>
 );
 
+export interface ListEntry {
+  label: string;
+  icon?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+}
+
 export interface ListProps extends VariantProps<typeof listVariants> {
   title?: string;
-  items: {
-    label: string;
-    icon?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
-  }[];
+  items: ListEntry[];
   useIcons?: boolean;
   className?: string;
   color?: string;
