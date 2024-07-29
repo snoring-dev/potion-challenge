@@ -12,6 +12,7 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as IngredientsImport } from './routes/ingredients'
+import { Route as CreatePotionImport } from './routes/create-potion'
 import { Route as IndexImport } from './routes/index'
 import { Route as PotionPotionIdImport } from './routes/potion.$potionId'
 
@@ -19,6 +20,11 @@ import { Route as PotionPotionIdImport } from './routes/potion.$potionId'
 
 const IngredientsRoute = IngredientsImport.update({
   path: '/ingredients',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const CreatePotionRoute = CreatePotionImport.update({
+  path: '/create-potion',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -43,6 +49,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/create-potion': {
+      id: '/create-potion'
+      path: '/create-potion'
+      fullPath: '/create-potion'
+      preLoaderRoute: typeof CreatePotionImport
+      parentRoute: typeof rootRoute
+    }
     '/ingredients': {
       id: '/ingredients'
       path: '/ingredients'
@@ -64,6 +77,7 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren({
   IndexRoute,
+  CreatePotionRoute,
   IngredientsRoute,
   PotionPotionIdRoute,
 })
@@ -77,12 +91,16 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/create-potion",
         "/ingredients",
         "/potion/$potionId"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/create-potion": {
+      "filePath": "create-potion.tsx"
     },
     "/ingredients": {
       "filePath": "ingredients.tsx"

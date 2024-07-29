@@ -38,13 +38,15 @@ export const Navbar: React.FC<NavbarProps> = ({
           </Typography>
         </a>
         <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-          <Button
-            variant="info"
-            size="small"
-            label={ctaButtonLabel}
-            onClick={onCtaClick}
-            iconLeft={MdOutlineAddBox}
-          />
+          <div className="hidden sm:block">
+            <Button
+              variant="info"
+              size="small"
+              label={ctaButtonLabel}
+              onClick={onCtaClick}
+              iconLeft={MdOutlineAddBox}
+            />
+          </div>
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             type="button"
@@ -93,6 +95,16 @@ export const Navbar: React.FC<NavbarProps> = ({
               </li>
             ))}
           </ul>
+          <div className="block md:hidden">
+            <Button
+              className="w-full my-2"
+              variant="info"
+              size="small"
+              label={ctaButtonLabel}
+              onClick={onCtaClick}
+              iconLeft={MdOutlineAddBox}
+            />
+          </div>
         </div>
       </div>
     </nav>
