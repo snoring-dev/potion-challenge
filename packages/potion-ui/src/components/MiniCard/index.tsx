@@ -5,23 +5,26 @@ import { BsFire } from "react-icons/bs";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../lib";
 
-const miniCardVariants = cva("group flex flex-row w-full cursor-pointer", {
-  variants: {
-    variant: {
-      default: "bg-white",
-      outlined: "border border-gray-200 rounded-md",
-      elevated: "shadow-md rounded-md",
+const miniCardVariants = cva(
+  "group overflow-hidden flex flex-col md:flex-row lg:flex-row xl:flex-row w-full cursor-pointer",
+  {
+    variants: {
+      variant: {
+        default: "bg-white",
+        outlined: "border border-gray-200 rounded-md",
+        elevated: "shadow-md rounded-md",
+      },
+      size: {
+        default: "min-h-12",
+        small: "min-h-8",
+      },
     },
-    size: {
-      default: "min-h-12",
-      small: "min-h-8",
+    defaultVariants: {
+      variant: "default",
+      size: "default",
     },
-  },
-  defaultVariants: {
-    variant: "default",
-    size: "default",
-  },
-});
+  }
+);
 
 const ImageWrapper: React.FC<{
   src: string;
@@ -30,8 +33,8 @@ const ImageWrapper: React.FC<{
 }> = ({ src, alt, size = "default" }) => (
   <div
     className={cn(
-      "aspect-auto relative overflow-hidden rounded-md",
-      size === "default" ? "w-80 h-40" : "w-40 h-20"
+      "w-full relative overflow-hidden rounded-md",
+      size === "default" ? "md:w-80 h-48 md:h-40" : "md:w-40 h-32 md:h-20"
     )}
   >
     <img
@@ -51,6 +54,7 @@ export interface MiniCardProps extends VariantProps<typeof miniCardVariants> {
   rating: number;
   energyLevel: string;
   className?: string;
+  onClick?: () => void;
 }
 
 export const MiniCard: React.FC<MiniCardProps> = ({
@@ -63,10 +67,14 @@ export const MiniCard: React.FC<MiniCardProps> = ({
   rating,
   energyLevel,
   className,
+  onClick = () => {},
 }) => (
-  <div className={cn(miniCardVariants({ variant, size }), className)}>
-    <ImageWrapper src={imageUrl} alt={imageAlt} size={size ?? 'default'} />
-    <div className="w-full h-full pl-2">
+  <div
+    className={cn(miniCardVariants({ variant, size }), className)}
+    onClick={onClick}
+  >
+    <ImageWrapper src={imageUrl} alt={imageAlt} size={size ?? "default"} />
+    <div className="w-full h-full mt-2 md:mt-0 md:pl-2">
       <Typography variant={size === "small" ? "h5" : "h4"}>{title}</Typography>
       <Rating rating={rating} />
       <div

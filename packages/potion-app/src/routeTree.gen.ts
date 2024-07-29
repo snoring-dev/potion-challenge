@@ -11,12 +11,18 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as RandomPotionImport } from './routes/random-potion'
 import { Route as IngredientsImport } from './routes/ingredients'
 import { Route as CreatePotionImport } from './routes/create-potion'
 import { Route as IndexImport } from './routes/index'
 import { Route as PotionPotionIdImport } from './routes/potion.$potionId'
 
 // Create/Update Routes
+
+const RandomPotionRoute = RandomPotionImport.update({
+  path: '/random-potion',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const IngredientsRoute = IngredientsImport.update({
   path: '/ingredients',
@@ -63,6 +69,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IngredientsImport
       parentRoute: typeof rootRoute
     }
+    '/random-potion': {
+      id: '/random-potion'
+      path: '/random-potion'
+      fullPath: '/random-potion'
+      preLoaderRoute: typeof RandomPotionImport
+      parentRoute: typeof rootRoute
+    }
     '/potion/$potionId': {
       id: '/potion/$potionId'
       path: '/potion/$potionId'
@@ -79,6 +92,7 @@ export const routeTree = rootRoute.addChildren({
   IndexRoute,
   CreatePotionRoute,
   IngredientsRoute,
+  RandomPotionRoute,
   PotionPotionIdRoute,
 })
 
@@ -93,6 +107,7 @@ export const routeTree = rootRoute.addChildren({
         "/",
         "/create-potion",
         "/ingredients",
+        "/random-potion",
         "/potion/$potionId"
       ]
     },
@@ -104,6 +119,9 @@ export const routeTree = rootRoute.addChildren({
     },
     "/ingredients": {
       "filePath": "ingredients.tsx"
+    },
+    "/random-potion": {
+      "filePath": "random-potion.tsx"
     },
     "/potion/$potionId": {
       "filePath": "potion.$potionId.tsx"

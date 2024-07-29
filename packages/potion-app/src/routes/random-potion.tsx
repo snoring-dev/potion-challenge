@@ -1,15 +1,15 @@
 import { createFileRoute, useLoaderData } from "@tanstack/react-router";
-import { getSinglePotion } from "../services/potion";
 import PotionPageView from "../components/PotionView";
+import { getRandomPotion } from "../services/potion";
 
-export const Route = createFileRoute("/potion/$potionId")({
-  loader: ({ params }) => getSinglePotion(params.potionId),
-  component: SinglePotionPage,
+export const Route = createFileRoute("/random-potion")({
+  loader: () => getRandomPotion(),
+  component: RandomPotionPage,
 });
 
-function SinglePotionPage() {
+function RandomPotionPage() {
   const potion = useLoaderData({
-    from: "/potion/$potionId",
+    from: "/random-potion",
   });
 
   if (!potion) {
