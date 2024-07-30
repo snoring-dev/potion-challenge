@@ -35,7 +35,9 @@ const stripVariants = cva("shrink-0 absolute top-0 bottom-0 w-[4px]", {
   },
 });
 
-export interface AlertProps extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof alertVariants> {
+export interface AlertProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof alertVariants> {
   title: string;
   description: React.ReactNode;
   icon?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
@@ -47,6 +49,7 @@ export interface AlertProps extends React.HTMLAttributes<HTMLDivElement>, Varian
     label: string;
     onClick: () => void;
   };
+  richText?: boolean;
 }
 
 export const Alert: React.FC<AlertProps> = ({
@@ -57,6 +60,7 @@ export const Alert: React.FC<AlertProps> = ({
   icon: Icon,
   primaryAction,
   secondaryAction,
+  richText = false,
   ...props
 }) => {
   return (
@@ -68,15 +72,27 @@ export const Alert: React.FC<AlertProps> = ({
           <Typography variant="h4" className="font-bold text-zinc-800">
             {title}
           </Typography>
-          <Typography className="mt-1 text-zinc-800">
-            {description}
-          </Typography>
+          {richText ? (
+            description
+          ) : (
+            <Typography className="mt-1 text-zinc-800">
+              {description}
+            </Typography>
+          )}
           {(primaryAction || secondaryAction) && (
             <div className="flex gap-2 mt-3">
               {primaryAction && (
                 <Button
                   size="small"
-                  variant={variant === 'success' ? 'success' : variant === 'error' ? 'danger' : variant === 'warning' ? 'warning' : 'info'}
+                  variant={
+                    variant === "success"
+                      ? "success"
+                      : variant === "error"
+                        ? "danger"
+                        : variant === "warning"
+                          ? "warning"
+                          : "info"
+                  }
                   onClick={primaryAction.onClick}
                   label={primaryAction.label}
                 />

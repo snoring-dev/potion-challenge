@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { TabComponent, Button } from "potion-ui";
+import { TabComponent, Button, Alert, Typography } from "potion-ui";
 import { TabItem } from "potion-ui/dist/src/components/TabComponent";
 import { useForm } from "react-hook-form";
 import { PotionFormSchema, PotionFormValues } from "./schema";
@@ -14,6 +14,7 @@ import { KeywordsTab } from "./KeywordsTab";
 import { PotionMetricsTab } from "./PotionMetricsTab";
 import { savePotion } from "../../services/potion";
 import { useNavigate } from "@tanstack/react-router";
+import { BiSolidErrorCircle } from "react-icons/bi";
 
 interface AddPotionFormProps {
   ingredients: IngredientType[];
@@ -23,6 +24,8 @@ export const AddPotionForm: React.FC<AddPotionFormProps> = ({
   ingredients,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState<string[]>([]);
+
   const formRef = useRef<HTMLFormElement>(null);
   const navigate = useNavigate();
 
@@ -63,11 +66,14 @@ export const AddPotionForm: React.FC<AddPotionFormProps> = ({
       }
     } else {
       console.error("Validation failed:");
+      const errorMessages: string[] = [];
       result.error.issues.forEach((issue) => {
+        errorMessages.push(issue.message);
         console.error(
           `Field: ${issue.path.join(".")}, Error: ${issue.message}`
         );
       });
+      setErrors([...errorMessages]);
     }
   };
 
@@ -109,6 +115,26 @@ export const AddPotionForm: React.FC<AddPotionFormProps> = ({
 
   return (
     <div className="w-full max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8">
+      {errors.length > 0 && (
+        <Alert
+          title="Vous devez corriger des erreurs"
+          variant="error"
+          className="mb-4"
+          description={
+            <ul className="space-y-1 list-inside mt-3">
+              {errors.map((issue, index) => (
+                <li key={index} className="flex items-center justify-start">
+                  <BiSolidErrorCircle className="relative -top-px" />
+                  <Typography variant="small" className="pl-2">
+                    {issue}
+                  </Typography>
+                </li>
+              ))}
+            </ul>
+          }
+          richText
+        />
+      )}
       <form ref={formRef} onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-4">
           <TabComponent
