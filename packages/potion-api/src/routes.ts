@@ -8,12 +8,12 @@ const app = new Hono().basePath("/api");
 app.use(
   "/*",
   cors({
-    origin: process.env.FRONT_APP as string,
+    origin: "*",
     allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowHeaders: ["Content-Type", "Authorization"],
     exposeHeaders: ["Content-Length"],
     maxAge: 600,
-    credentials: true,
+    credentials: false,
   })
 );
 
