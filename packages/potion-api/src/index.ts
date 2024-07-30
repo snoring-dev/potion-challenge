@@ -1,8 +1,8 @@
 import "dotenv/config";
 import { serve } from "@hono/node-server";
 import { handle } from "@hono/node-server/vercel";
-import routes from "./routes";
-import prisma from "./lib/prisma";
+import routes from "./routes.js";
+import prisma from "./lib/prisma.js";
 import { Hono } from "hono";
 
 const app = new Hono();
