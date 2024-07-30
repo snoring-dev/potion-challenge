@@ -62,27 +62,3 @@ export const LowRating: Story = {
     energyLevel: "Low Intensity",
   },
 };
-
-const Template: Story = {
-  render: (args) => (
-    <div className="space-y-8">
-      <ArticleHeader {...args} />
-      <ArticleHeader
-        {...args}
-        title="Another Article"
-        date="1 December 2023"
-        rating={3}
-      />
-      <ArticleHeader
-        {...args}
-        title="Yet Another Article"
-        date="15 December 2023"
-        rating={5}
-      />
-    </div>
-  ),
-};
-
-export const MultipleHeaders: Story = {
-  ...Template,
-};
