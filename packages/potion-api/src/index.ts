@@ -9,6 +9,10 @@ const app = new Hono();
 
 app.route("", routes);
 
+app.get("/", (c) => {
+  return c.html("<h1>Welcome to PotionLab api!</h1>");
+});
+
 app.onError((err, c) => {
   console.error(`${err}`);
   return c.text("Internal Server Error", 500);
