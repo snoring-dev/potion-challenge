@@ -11,6 +11,7 @@
     "dev:api": "npm run dev -w potion-api",
     "build": "npm run build:ui && npm run build:app && npm run build:api",
     "build:ui": "npm run build -w potion-ui",
+    "test:ui": "npm run test -w potion-ui",
     "storybook": "npm run storybook -w potion-ui",
     "build-storybook": "npm run build-storybook -w potion-ui",
     "prisma:generate": "npm run prisma:generate -w potion-api",
