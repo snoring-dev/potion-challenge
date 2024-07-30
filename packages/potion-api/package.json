@@ -9,7 +9,8 @@
     "prisma:generate": "prisma generate",
     "prisma:push": "dotenv -e .env.local -- prisma db push",
     "build": "npm run prisma:generate && tsc",
-    "build:vercel": "npm run prisma generate"
+    "build:vercel": "npm run prisma generate",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@hono/node-server": "^1.12.0",
