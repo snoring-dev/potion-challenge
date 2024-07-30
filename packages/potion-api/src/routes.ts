@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { z } from "zod";
-import prisma from "./lib/prisma";
+import prisma from "./lib/prisma.js";
 
 const app = new Hono().basePath("/api");
 
