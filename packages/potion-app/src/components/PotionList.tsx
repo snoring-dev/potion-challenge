@@ -33,7 +33,7 @@ export const PotionList: React.FC<PotionListProps> = ({ potions }) => {
                   description={potion.description}
                   tags={potion.tags.map((t) => `#${t}`)}
                   primaryAction={{
-                    label: "Discover",
+                    label: "Découvrir",
                     onClick: () => redirectToPotion(potion.id),
                   }}
                 />
@@ -42,7 +42,7 @@ export const PotionList: React.FC<PotionListProps> = ({ potions }) => {
           </div>
         ) : (
           <Typography variant="h2" className="text-center text-gray-500">
-            No potions available
+            Aucune potion disponible pour le moment
           </Typography>
         )}
       </div>

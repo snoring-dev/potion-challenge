@@ -53,7 +53,7 @@ const CardBody = ({ title, description, tags = [] }: Partial<CardProps>) => (
             variant="small"
             className="font-semibold text-xs uppercase"
           >
-            keywords:
+            Mots-clés:
           </Typography>
           <div className="flex flex-wrap gap-2 mt-1">
             {tags.map((tag, index) => (

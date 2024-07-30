@@ -6,7 +6,7 @@ class ApiClient {
 
   private constructor() {
     this.api = axios.create({
-      baseURL: "http://localhost:58300/api",
+      baseURL: "https://potion-lab-service.vercel.app/api",
     });
   }
 
