@@ -1,4 +1,4 @@
-import { IconButton, Typography } from "potion-ui";
+import { IconButton, Typography } from "@snoring-dev/potion-ui";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { FaPlus, FaMinus } from "react-icons/fa";
 import { updateInventory } from "../services/ingredient";

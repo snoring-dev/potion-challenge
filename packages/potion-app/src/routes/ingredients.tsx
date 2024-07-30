@@ -3,7 +3,7 @@ import {
   useLoaderData,
   useNavigate,
 } from "@tanstack/react-router";
-import { Button, Modal, Typography } from "potion-ui";
+import { Button, Modal, Typography } from "@snoring-dev/potion-ui";
 import { fetchIngredients } from "../services/ingredient";
 import DataTable, { Column } from "../components/DataTable";
 import { Ingredient as IngredientType } from "../types/Ingredient";

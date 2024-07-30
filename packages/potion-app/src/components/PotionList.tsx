@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Typography } from "potion-ui";
+import { Card, Typography } from "@snoring-dev/potion-ui";
 import { Potion } from "../types/Potion";
 import { useNavigate } from "@tanstack/react-router";
 

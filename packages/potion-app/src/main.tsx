@@ -4,7 +4,7 @@ import { RouterProvider, createRouter } from "@tanstack/react-router";
 
 import { routeTree } from "./routeTree.gen";
 
-import 'potion-ui/dist/style.css';
+import '@snoring-dev/potion-ui/dist/style.css';
 import './index.css';
 
 const router = createRouter({ routeTree });

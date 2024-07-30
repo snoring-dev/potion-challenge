@@ -1,7 +1,10 @@
 {
-  "name": "potion-ui",
+  "name": "@snoring-dev/potion-ui",
   "private": false,
   "version": "1.0.0",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.es.js",

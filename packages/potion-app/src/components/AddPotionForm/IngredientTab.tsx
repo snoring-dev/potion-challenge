@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
-import { IngredientBox, Typography } from "potion-ui";
+import { IngredientBox, Typography } from "@snoring-dev/potion-ui";
 import { Control, useWatch } from "react-hook-form";
 import { CustomSetValueFunction, PotionFormValues } from "./schema";
 import { Ingredient as IngredientType } from "../../types/Ingredient";

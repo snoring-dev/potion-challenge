@@ -1,6 +1,6 @@
 import { useNavigate } from "@tanstack/react-router";
 import { Potion } from "../types/Potion";
-import { AttributeList, MiniCard, PotionArticle, Typography } from "potion-ui";
+import { AttributeList, MiniCard, PotionArticle, Typography } from "@snoring-dev/potion-ui";
 import { formatDate } from "../utils";
 import { GiHealthPotion } from "react-icons/gi";
 import {

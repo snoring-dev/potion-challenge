@@ -1,4 +1,4 @@
-import { InputField, TextField, Typography } from "potion-ui";
+import { InputField, TextField, Typography } from "@snoring-dev/potion-ui";
 import { Control, Controller } from "react-hook-form";
 import { PotionFormValues } from "./schema";
 

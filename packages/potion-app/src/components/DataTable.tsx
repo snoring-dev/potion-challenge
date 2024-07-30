@@ -1,4 +1,4 @@
-import { Typography } from "potion-ui";
+import { Typography } from "@snoring-dev/potion-ui";
 import { ReactNode, useState } from "react";
 
 export interface Column<T> {

@@ -1,7 +1,7 @@
-import { InstructionsField, Typography } from "potion-ui";
+import { InstructionsField, Typography } from "@snoring-dev/potion-ui";
 import { Control } from "react-hook-form";
 import { CustomSetValueFunction, PotionFormValues } from "./schema";
-import { ListEntry } from "potion-ui/dist/src/components/List";
+import { ListEntry } from "@snoring-dev/potion-ui/dist/src/components/List";
 import { useCallback } from "react";
 
 interface InstructionsTabProps {

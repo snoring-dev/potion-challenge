@@ -1,7 +1,7 @@
 import { Controller, useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, InputField, TextField } from "potion-ui";
+import { Button, InputField, TextField } from "@snoring-dev/potion-ui";
 import { useRef, useState } from "react";
 import { createIngredient } from "../services/ingredient";
 

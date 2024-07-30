@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
-import { TabComponent, Button, Alert, Typography } from "potion-ui";
-import { TabItem } from "potion-ui/dist/src/components/TabComponent";
+import { TabComponent, Button, Alert, Typography } from "@snoring-dev/potion-ui";
+import { TabItem } from "@snoring-dev/potion-ui/dist/src/components/TabComponent";
 import { useForm } from "react-hook-form";
 import { PotionFormSchema, PotionFormValues } from "./schema";
 import { GeneralInfoTab } from "./GeneralInfoTab";

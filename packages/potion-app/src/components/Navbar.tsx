@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Typography, Button } from "potion-ui";
+import { Typography, Button } from "@snoring-dev/potion-ui";
 import { MdOutlineAddBox } from "react-icons/md";
 
 interface NavItem {
