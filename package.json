@@ -11,6 +11,8 @@
     "dev:api": "npm run dev -w potion-api",
     "build": "npm run build:ui && npm run build:app && npm run build:api",
     "build:ui": "npm run build -w potion-ui",
+    "build:api": "npm run build -w potion-api",
+    "build:app": "npm run build -w potion-app",
     "test:ui": "npm run test -w potion-ui",
     "storybook": "npm run storybook -w potion-ui",
     "build-storybook": "npm run build-storybook -w potion-ui",

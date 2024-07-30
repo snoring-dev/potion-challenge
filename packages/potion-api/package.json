@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "dotenv -e .env.local -- tsx watch src/index.ts",
     "prisma:generate": "dotenv -e .env.local -- prisma generate",
-    "prisma:push": "dotenv -e .env.local -- prisma db push"
+    "prisma:push": "dotenv -e .env.local -- prisma db push",
+    "build": "tsc && npm run prisma:generate"
   },
   "dependencies": {
     "@hono/node-server": "^1.12.0",
