@@ -17,6 +17,7 @@ export interface PotionArticleProps {
   ingredients: ListProps;
   instructions: ListProps;
   extraDetails?: string;
+  isMobile?: boolean;
 }
 
 export const PotionArticle: React.FC<PotionArticleProps> = ({
@@ -28,10 +29,11 @@ export const PotionArticle: React.FC<PotionArticleProps> = ({
   ingredients,
   instructions,
   extraDetails,
+  isMobile = false,
 }) => {
   return (
     <article className="flex flex-col w-full">
-      <ArticleHeader {...headerProps} />
+      <ArticleHeader isMobile={isMobile} {...headerProps} />
       <Divider />
       <div className="flex aspect-square md:aspect-video">
         <img
@@ -43,7 +45,9 @@ export const PotionArticle: React.FC<PotionArticleProps> = ({
       </div>
       <Divider />
       <div className="flex items-center justify-center">
-        <PotionMetrics {...metricsProps} />
+        <PotionMetrics
+          {...metricsProps}
+        />
       </div>
       <div className="flex flex-col my-6">
         <Typography>{description}</Typography>

@@ -48,6 +48,7 @@ export interface ArticleHeaderProps
   energyLevel: string;
   rating: number;
   className?: string;
+  isMobile?: boolean;
 }
 
 export const ArticleHeader: React.FC<ArticleHeaderProps> = ({
@@ -57,23 +58,31 @@ export const ArticleHeader: React.FC<ArticleHeaderProps> = ({
   energyLevel,
   rating,
   className,
+  isMobile = false,
 }) => {
   return (
     <header className={cn(articleHeaderVariants({ variant }), className)}>
       <Typography variant="h1">{title}</Typography>
-      <div className="flex flex-row items-center">
+      <div
+        className={cn(
+          "flex",
+          isMobile
+            ? "flex-col items-start justify-start"
+            : "flex-row items-center"
+        )}
+      >
         <MetadataItem
           icon={<BsCalendar3 className="text-red-300" />}
           text={date}
           className="text-red-300"
         />
-        <Divider />
+        {!isMobile && <Divider />}
         <MetadataItem
           icon={<BsFire className="text-red-300" />}
           text={energyLevel}
           className="text-red-300 font-semibold"
         />
-        <Divider />
+        {!isMobile && <Divider />}
         <div className="relative top-1">
           <Rating rating={rating} className="text-red-300" />
         </div>

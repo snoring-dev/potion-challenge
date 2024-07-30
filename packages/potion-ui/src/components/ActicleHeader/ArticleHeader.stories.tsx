@@ -32,10 +32,11 @@ export const Default: Story = {
   },
 };
 
-export const Compact: Story = {
+export const SmallDevices: Story = {
   args: {
     ...Default.args,
     variant: "compact",
+    isMobile: true,
   },
 };
 

@@ -10,10 +10,12 @@ import {
 } from "../utils/labels";
 import { Metrics } from "../types/Metrics";
 import { MagicalBrewStats } from "../types/MagicalBrewStats";
+import { useMediaQuery } from "@uidotdev/usehooks";
 
 export default function PotionPageView({ potion }: { potion: Potion }) {
   const navigate = useNavigate();
   const redirectToPotion = (id: string) => navigate({ to: `/potion/${id}` });
+  const isMobile = useMediaQuery("only screen and (max-width : 768px)");
 
   if (!potion) {
     return <div>Potion not found!</div>;
@@ -24,6 +26,7 @@ export default function PotionPageView({ potion }: { potion: Potion }) {
       <div className="flex flex-col md:flex-row">
         <div className="w-full md:w-2/3 p-4">
           <PotionArticle
+            isMobile={isMobile}
             headerProps={{
               title: potion.title,
               date: formatDate(potion.creationDate),
