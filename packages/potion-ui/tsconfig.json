@@ -12,6 +12,9 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
 
+    /* Tests */
+    "types": ["jest", "@testing-library/jest-dom"],
+
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
@@ -37,8 +40,6 @@
     "node_modules",
     "dist",
     "**/*.stories.ts",
-    "**/*.stories.tsx",
-    "**/*.test.ts",
-    "**/*.test.tsx"
+    "**/*.stories.tsx"
   ]
 }
