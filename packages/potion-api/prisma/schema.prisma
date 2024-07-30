@@ -1,5 +1,5 @@
 datasource db {
-  provider = "mongodb"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -8,7 +8,7 @@ generator client {
 }
 
 model Potion {
-  id               String             @id @default(auto()) @map("_id") @db.ObjectId
+  id               String             @id @default(uuid())
   title            String
   creationDate     DateTime
   rating           Float
@@ -16,15 +16,15 @@ model Potion {
   details          String
   thumbnailUrl     String
   mainImageUrl     String
-  metrics          Metrics
-  magicalBrewStats MagicalBrewStats
+  metrics          Metrics?
+  magicalBrewStats MagicalBrewStats?
   instructions     String[]
   tags             String[]
   ingredients      PotionIngredient[]
 }
 
 model Ingredient {
-  id               String             @id @default(auto()) @map("_id") @db.ObjectId
+  id               String             @id @default(uuid())
   name             String             @unique
   shortDescription String
   inventory        Int
@@ -32,24 +32,30 @@ model Ingredient {
 }
 
 model PotionIngredient {
-  id           String     @id @default(auto()) @map("_id") @db.ObjectId
+  id           String     @id @default(uuid())
   potion       Potion     @relation(fields: [potionId], references: [id])
-  potionId     String     @db.ObjectId
+  potionId     String
   ingredient   Ingredient @relation(fields: [ingredientId], references: [id])
-  ingredientId String     @db.ObjectId
+  ingredientId String
   quantity     Float
 
   @@unique([potionId, ingredientId])
 }
 
-type Metrics {
+model Metrics {
+  id          String  @id @default(uuid())
+  potionId    String  @unique
+  potion      Potion  @relation(fields: [potionId], references: [id])
   potency     String
   duration    String
   difficulty  String
   sideEffects String
 }
 
-type MagicalBrewStats {
+model MagicalBrewStats {
+  id               String  @id @default(uuid())
+  potionId         String  @unique
+  potion           Potion  @relation(fields: [potionId], references: [id])
   arcanePotency    String
   etherealEssence  String
   corporealMass    String
