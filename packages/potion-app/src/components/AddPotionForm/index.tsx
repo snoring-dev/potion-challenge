@@ -135,12 +135,12 @@ export const AddPotionForm: React.FC<AddPotionFormProps> = ({
           richText
         />
       )}
-      <form ref={formRef} onSubmit={handleSubmit(onSubmit)}>
+      <form ref={formRef} onSubmit={(e) => { e.preventDefault()}}>
         <div className="mb-4">
           <TabComponent
             tabs={tabs}
             className="w-full h-full"
-            defaultIndex={1}
+            defaultIndex={0}
             tabListClassName="flex-wrap justify-center sm:justify-start"
             tabClassName="my-1 sm:my-0"
           />
@@ -151,6 +151,7 @@ export const AddPotionForm: React.FC<AddPotionFormProps> = ({
             variant="info"
             className={isLoading ? "animate-pulse" : "animate-none"}
             label={isLoading ? "Chargement..." : "Sauvegarder"}
+            onClick={handleSubmit(onSubmit)}
           />
         </div>
       </form>

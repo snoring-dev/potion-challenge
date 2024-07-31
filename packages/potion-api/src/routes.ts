@@ -17,6 +17,38 @@ app.use(
   })
 );
 
+const select = {
+  ...Object.fromEntries(
+    Object.keys(prisma.potion.fields).map((f) => [f, true])
+  ),
+  ingredients: {
+    select: {
+      quantity: true,
+      ingredient: true,
+    },
+  },
+  metrics: {
+    select: {
+      ...Object.fromEntries(
+        Object.keys(prisma.metrics.fields).map((f) => [f, true])
+      ),
+      id: false,
+      potionId: false,
+      potion: false,
+    },
+  },
+  magicalBrewStats: {
+    select: {
+      ...Object.fromEntries(
+        Object.keys(prisma.magicalBrewStats.fields).map((f) => [f, true])
+      ),
+      id: false,
+      potionId: false,
+      potion: false,
+    },
+  },
+}
+
 app.get("/potions", async (c) => {
   const potions = await prisma.potion.findMany({
     include: {
@@ -25,6 +57,8 @@ app.get("/potions", async (c) => {
           ingredient: true,
         },
       },
+      metrics: true,
+      magicalBrewStats: true,
     },
   });
   return c.json(potions);
@@ -32,7 +66,7 @@ app.get("/potions", async (c) => {
 
 app.post("/potions", async (c) => {
   const body = await c.req.json();
-  const { ingredients, ...potionData } = body;
+  const { ingredients, metrics, magicalBrewStats, ...potionData } = body;
 
   const newPotion = await prisma.potion.create({
     data: {
@@ -45,6 +79,12 @@ app.post("/potions", async (c) => {
           quantity: ing.quantity,
         })),
       },
+      metrics: {
+        create: metrics,
+      },
+      magicalBrewStats: {
+        create: magicalBrewStats,
+      },
     },
     include: {
       ingredients: {
@@ -52,9 +92,41 @@ app.post("/potions", async (c) => {
           ingredient: true,
         },
       },
+      metrics: true,
+      magicalBrewStats: true,
     },
   });
+
   return c.json(newPotion, 201);
+});
+
+app.delete("/potions/:id", async (c) => {
+  const id = c.req.param("id");
+
+  try {
+    await prisma.$transaction(async (tx) => {
+      await tx.potionIngredient.deleteMany({
+        where: { potionId: id },
+      });
+
+      await tx.metrics.delete({
+        where: { potionId: id },
+      });
+
+      await tx.magicalBrewStats.delete({
+        where: { potionId: id },
+      });
+
+      await tx.potion.delete({
+        where: { id },
+      });
+    });
+
+    return c.json({ message: "Potion deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting potion:", error);
+    return c.json({ error: "Failed to delete potion" }, 500);
+  }
 });
 
 app.get("/potions/random", async (c) => {
@@ -64,12 +136,9 @@ app.get("/potions/random", async (c) => {
     const randomPotion = await prisma.potion.findMany({
       take: 1,
       skip: randomIndex,
-      include: {
-        ingredients: {
-          include: {
-            ingredient: true,
-          },
-        },
+      select: {
+        ...select,
+        id: true,
       },
     });
 
@@ -86,6 +155,10 @@ app.get("/potions/random", async (c) => {
         },
       },
       take: 3,
+      include: {
+        metrics: true,
+        magicalBrewStats: true,
+      },
     });
 
     const response = {
@@ -104,13 +177,7 @@ app.get("/potions/:id", async (c) => {
   const id = c.req.param("id");
   const potion = await prisma.potion.findUnique({
     where: { id },
-    include: {
-      ingredients: {
-        include: {
-          ingredient: true,
-        },
-      },
-    },
+    select,
   });
 
   if (!potion) {
@@ -124,6 +191,10 @@ app.get("/potions/:id", async (c) => {
       },
     },
     take: 3,
+    include: {
+      metrics: true,
+      magicalBrewStats: true,
+    },
   });
 
   const response = {

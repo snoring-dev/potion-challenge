@@ -13,6 +13,7 @@ import { AddIngredientForm } from "../components/AddIngredientForm";
 export const Route = createFileRoute("/ingredients")({
   loader: () => fetchIngredients(),
   component: Ingredients,
+  pendingComponent: () => "Chargement des données...",
 });
 
 function Ingredients() {

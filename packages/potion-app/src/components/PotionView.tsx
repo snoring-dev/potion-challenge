@@ -85,7 +85,7 @@ export default function PotionPageView({ potion }: { potion: Potion }) {
                 const isLast =
                   index == (potion?.suggestedPotions?.length ?? 1) - 1;
                 return (
-                  <>
+                  <div key={sp.id}>
                     <MiniCard
                       description={sp.description}
                       energyLevel={sp.metrics.potency}
@@ -98,7 +98,7 @@ export default function PotionPageView({ potion }: { potion: Potion }) {
                     {!isLast && (
                       <div className="bg-white-active h-[1px] my-1"></div>
                     )}
-                  </>
+                  </div>
                 );
               })}
           </div>

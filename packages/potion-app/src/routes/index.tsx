@@ -5,10 +5,11 @@ import { PotionList } from "../components/PotionList";
 
 export const Route = createFileRoute("/")({
   loader: () => fetchPotions(),
-  component: Index,
+  component: HomePage,
+  pendingComponent: () => "Chargement des données...",
 });
 
-function Index() {
+function HomePage() {
   const potions = useLoaderData({
     from: "/",
     select: (data: unknown): PotionType[] => data as PotionType[],
