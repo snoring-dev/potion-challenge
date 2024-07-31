@@ -13,6 +13,10 @@ app.get("/", (c) => {
   return c.html("<h1>Welcome to PotionLab api!</h1>");
 });
 
+app.post("/test-post", (c) => {
+  return c.json({ flag: "success" });
+});
+
 app.onError((err, c) => {
   console.error(`${err}`);
   return c.text("Internal Server Error", 500);
