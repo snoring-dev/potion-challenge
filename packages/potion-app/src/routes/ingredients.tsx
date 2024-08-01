@@ -9,11 +9,12 @@ import DataTable, { Column } from "../components/DataTable";
 import { Ingredient as IngredientType } from "../types/Ingredient";
 import { IngredientInventory } from "../components/IngredientInventory";
 import { AddIngredientForm } from "../components/AddIngredientForm";
+import LoadingState from "../components/LoadingState";
 
 export const Route = createFileRoute("/ingredients")({
   loader: () => fetchIngredients(),
   component: Ingredients,
-  pendingComponent: () => "Chargement des données...",
+  pendingComponent: () => <LoadingState />,
 });
 
 function Ingredients() {

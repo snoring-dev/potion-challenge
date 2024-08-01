@@ -2,11 +2,12 @@ import { createFileRoute, useLoaderData } from "@tanstack/react-router";
 import { fetchPotions } from "../services/potion";
 import { Potion as PotionType } from "../types/Potion";
 import { PotionList } from "../components/PotionList";
+import LoadingState from "../components/LoadingState";
 
 export const Route = createFileRoute("/")({
   loader: () => fetchPotions(),
   component: HomePage,
-  pendingComponent: () => "Chargement des données...",
+  pendingComponent: () => <LoadingState />,
 });
 
 function HomePage() {
