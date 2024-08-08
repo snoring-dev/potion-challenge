@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { z } from "zod";
 import prisma from "./lib/prisma.js";
+import potionRepo from "./lib/potion-repository.js";
 
 const app = new Hono().basePath("/api");
 
@@ -17,86 +18,14 @@ app.use(
   })
 );
 
-const select = {
-  ...Object.fromEntries(
-    Object.keys(prisma.potion.fields).map((f) => [f, true])
-  ),
-  ingredients: {
-    select: {
-      quantity: true,
-      ingredient: true,
-    },
-  },
-  metrics: {
-    select: {
-      ...Object.fromEntries(
-        Object.keys(prisma.metrics.fields).map((f) => [f, true])
-      ),
-      id: false,
-      potionId: false,
-      potion: false,
-    },
-  },
-  magicalBrewStats: {
-    select: {
-      ...Object.fromEntries(
-        Object.keys(prisma.magicalBrewStats.fields).map((f) => [f, true])
-      ),
-      id: false,
-      potionId: false,
-      potion: false,
-    },
-  },
-}
-
 app.get("/potions", async (c) => {
-  const potions = await prisma.potion.findMany({
-    include: {
-      ingredients: {
-        include: {
-          ingredient: true,
-        },
-      },
-      metrics: true,
-      magicalBrewStats: true,
-    },
-  });
+  const potions = await potionRepo.findAll();
   return c.json(potions);
 });
 
 app.post("/potions", async (c) => {
   const body = await c.req.json();
-  const { ingredients, metrics, magicalBrewStats, ...potionData } = body;
-
-  const newPotion = await prisma.potion.create({
-    data: {
-      ...potionData,
-      ingredients: {
-        create: ingredients.map((ing: { id: string; quantity: number }) => ({
-          ingredient: {
-            connect: { id: ing.id },
-          },
-          quantity: ing.quantity,
-        })),
-      },
-      metrics: {
-        create: metrics,
-      },
-      magicalBrewStats: {
-        create: magicalBrewStats,
-      },
-    },
-    include: {
-      ingredients: {
-        include: {
-          ingredient: true,
-        },
-      },
-      metrics: true,
-      magicalBrewStats: true,
-    },
-  });
-
+  const newPotion = await potionRepo.createPotion(body);
   return c.json(newPotion, 201);
 });
 
@@ -104,24 +33,7 @@ app.delete("/potions/:id", async (c) => {
   const id = c.req.param("id");
 
   try {
-    await prisma.$transaction(async (tx) => {
-      await tx.potionIngredient.deleteMany({
-        where: { potionId: id },
-      });
-
-      await tx.metrics.delete({
-        where: { potionId: id },
-      });
-
-      await tx.magicalBrewStats.delete({
-        where: { potionId: id },
-      });
-
-      await tx.potion.delete({
-        where: { id },
-      });
-    });
-
+    await potionRepo.deletePotion(id);
     return c.json({ message: "Potion deleted successfully" });
   } catch (error) {
     console.error("Error deleting potion:", error);
@@ -131,42 +43,8 @@ app.delete("/potions/:id", async (c) => {
 
 app.get("/potions/random", async (c) => {
   try {
-    const potionCount = await prisma.potion.count();
-    const randomIndex = Math.floor(Math.random() * potionCount);
-    const randomPotion = await prisma.potion.findMany({
-      take: 1,
-      skip: randomIndex,
-      select: {
-        ...select,
-        id: true,
-      },
-    });
-
-    if (randomPotion.length === 0) {
-      return c.json({ message: "No potions available" }, 404);
-    }
-
-    const potion = randomPotion[0];
-
-    const suggestedPotions = await prisma.potion.findMany({
-      where: {
-        id: {
-          not: potion.id,
-        },
-      },
-      take: 3,
-      include: {
-        metrics: true,
-        magicalBrewStats: true,
-      },
-    });
-
-    const response = {
-      ...potion,
-      suggestedPotions,
-    };
-
-    return c.json(response);
+    const random = await potionRepo.findRandom();
+    return c.json(random);
   } catch (error) {
     console.error(error);
     return c.json({ message: "Internal Server Error" }, 500);
@@ -175,33 +53,7 @@ app.get("/potions/random", async (c) => {
 
 app.get("/potions/:id", async (c) => {
   const id = c.req.param("id");
-  const potion = await prisma.potion.findUnique({
-    where: { id },
-    select,
-  });
-
-  if (!potion) {
-    return c.json({ message: "Potion not found" }, 404);
-  }
-
-  const suggestedPotions = await prisma.potion.findMany({
-    where: {
-      id: {
-        not: id,
-      },
-    },
-    take: 3,
-    include: {
-      metrics: true,
-      magicalBrewStats: true,
-    },
-  });
-
-  const response = {
-    ...potion,
-    suggestedPotions,
-  };
-
+  const response = await potionRepo.findOne(id);
   return c.json(response);
 });
 
